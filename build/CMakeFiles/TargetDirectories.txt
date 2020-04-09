@@ -1,0 +1,8 @@
+/home/nuria/Pengo/build/CMakeFiles/rebuild_cache.dir
+/home/nuria/Pengo/build/CMakeFiles/edit_cache.dir
+/home/nuria/Pengo/build/CMakeFiles/MiJuego.dir
+/home/nuria/Pengo/build/CMakeFiles/libModulos.dir
+/home/nuria/Pengo/build/ej_modulos/CMakeFiles/edit_cache.dir
+/home/nuria/Pengo/build/ej_modulos/CMakeFiles/rebuild_cache.dir
+/home/nuria/Pengo/build/Escenario/CMakeFiles/edit_cache.dir
+/home/nuria/Pengo/build/Escenario/CMakeFiles/rebuild_cache.dir

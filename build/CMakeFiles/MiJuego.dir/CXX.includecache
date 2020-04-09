@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/nuria/Pengo/Escenario/Escenario.h
+SFML/Graphics.hpp
+-
+
+/home/nuria/Pengo/ej_modulos/mimodulo.h
+
+/home/nuria/Pengo/include/config.h
+
+/home/nuria/Pengo/main.cpp
+SFML/Graphics.hpp
+-
+iostream
+-
+Escenario/Escenario.h
+/home/nuria/Pengo/Escenario/Escenario.h
+ej_modulos/mimodulo.h
+/home/nuria/Pengo/ej_modulos/mimodulo.h
+include/config.h
+/home/nuria/Pengo/include/config.h
+
