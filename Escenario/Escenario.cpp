@@ -1,7 +1,7 @@
 #include "Escenario.h"
 #include "iostream"
-#define filas 25
-#define columnas 35
+#define filas 20
+#define columnas 23
 
 Escenario *Escenario::instance = 0;
 
@@ -12,7 +12,7 @@ Escenario::Escenario(/* args */)
     tex = new sf::Texture;
     
 
-    if (!tex->loadFromFile("resources/bloques.png"))
+    if (!tex->loadFromFile("resources/bloques32.png"))
     {
         std::cout << "Error cargando la imagen " << std::endl;
         exit(0);
@@ -41,18 +41,18 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
         {
             if (matriz[i][j] == 0)
             {
-                body->setTextureRect(sf::IntRect(8 * 16, 3 * 16, 16, 16));
-                body->setPosition(i * 16, j * 16);
+                body->setTextureRect(sf::IntRect(8 * 32, 3 * 32, 32, 32));
+                body->setPosition(i * 32, j * 32);
                 window.draw(*body);
             }
             else if(matriz[i][j]==2){
-                 body->setTextureRect(sf::IntRect(7 * 16, 0 * 16, 16, 16));
-                body->setPosition(i * 16, j * 16);
+                 body->setTextureRect(sf::IntRect(7 * 32, 0 * 32, 32, 32));
+                body->setPosition(i * 32, j * 32);
                 window.draw(*body);
             }
             else if(matriz[i][j]==5) {
-                body->setTextureRect(sf::IntRect(3 * 16, 1 * 16, 16, 16));
-                body->setPosition(i * 16, j * 16);
+                body->setTextureRect(sf::IntRect(3 * 32, 1 * 32, 32, 32));
+                body->setPosition(i * 32, j * 32);
                 window.draw(*body);
             }
         }
@@ -103,4 +103,7 @@ void Escenario::crearMatriz()
     matriz[4][32] = 5;
     matriz[8][15] = 5;
     matriz[15][2] = 5;
+    //aqui el zelda
+    matriz[10][11]=6;
+
 }

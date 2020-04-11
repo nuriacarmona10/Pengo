@@ -4,8 +4,9 @@
 #include "include/config.h"
 #include "ej_modulos/mimodulo.h"
 #include "Escenario/Escenario.h"
+#include "Jugador/Jugador.h"
 
-#define UPDATE_TICK_TIME 1000 / 15
+#define UPDATE_TICK_TIME 1000 / 17
 
 int main()
 {
@@ -13,7 +14,7 @@ int main()
   sf::Clock updateClock;
 
   //Creamos una ventana
-  sf::RenderWindow window(sf::VideoMode(400, 560), "P0. Fundamentos de los Videojuegos. DCCIA");
+  sf::RenderWindow window(sf::VideoMode(640, 736), "P0. Fundamentos de los Videojuegos. DCCIA");
 
   //Le pongo el centroide donde corresponde
   // sprite.setOrigin(75 / 2, 75 / 2);
@@ -26,17 +27,21 @@ int main()
   //Bucle del juego
   while (window.isOpen())
   {
-    if (updateClock.getElapsedTime().asMilliseconds() > UPDATE_TICK_TIME)
-    {
-      float timeElapsed = updateClock.restart().asSeconds();
-    }
+    
 
     float percentTick = std::min(1.f, (float)updateClock.getElapsedTime().asSeconds() * 1000 / 66.67f);
     //Bucle de obtención de eventos
     sf::Event event;
     window.clear();
-    
+    if (updateClock.getElapsedTime().asMilliseconds() > UPDATE_TICK_TIME)
+    {
+      float timeElapsed = updateClock.restart().asSeconds();
+      Jugador::getInstance()->update(timeElapsed);
+    }
     Escenario::getInstance()->draw(window, percentTick);
+    
+    Jugador::getInstance()->draw(window,percentTick);
+
     window.display();
     while (window.pollEvent(event))
     {

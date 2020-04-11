@@ -10,6 +10,12 @@
 SFML/Graphics.hpp
 -
 
+/home/nuria/Pengo/Jugador/Jugador.h
+SFML/Graphics.hpp
+-
+../Escenario/Escenario.h
+/home/nuria/Pengo/Escenario/Escenario.h
+
 /home/nuria/Pengo/ej_modulos/mimodulo.h
 
 /home/nuria/Pengo/include/config.h
@@ -27,4 +33,6 @@ ej_modulos/mimodulo.h
 /home/nuria/Pengo/ej_modulos/mimodulo.h
 Escenario/Escenario.h
 /home/nuria/Pengo/Escenario/Escenario.h
+Jugador/Jugador.h
+/home/nuria/Pengo/Jugador/Jugador.h
 

@@ -17,6 +17,16 @@ SFML/Graphics.hpp
 -
 
 /home/nuria/Pengo/Jugador/Jugador.cpp
+Jugador.h
+/home/nuria/Pengo/Jugador/Jugador.h
+iostream
+/home/nuria/Pengo/Jugador/iostream
+
+/home/nuria/Pengo/Jugador/Jugador.h
+SFML/Graphics.hpp
+-
+../Escenario/Escenario.h
+/home/nuria/Pengo/Escenario/Escenario.h
 
 /home/nuria/Pengo/ej_modulos/mimodulo.cpp
 mimodulo.h

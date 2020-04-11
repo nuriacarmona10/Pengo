@@ -4,7 +4,9 @@
 CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o: ../Escenario/Escenario.cpp
 CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o: ../Escenario/Escenario.h
 
+CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o: ../Escenario/Escenario.h
 CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o: ../Jugador/Jugador.cpp
+CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o: ../Jugador/Jugador.h
 
 CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o: ../ej_modulos/mimodulo.cpp
 CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o: ../ej_modulos/mimodulo.h
