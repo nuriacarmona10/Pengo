@@ -1,27 +1,37 @@
 [
 {
   "directory": "/home/nuria/Pengo/build",
-  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/MiJuego.dir/main.cpp.o -c /home/nuria/Pengo/main.cpp",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/MiJuego.dir/main.cpp.o -c /home/nuria/Pengo/main.cpp",
   "file": "/home/nuria/Pengo/main.cpp"
 },
 {
   "directory": "/home/nuria/Pengo/build",
-  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o -c /home/nuria/Pengo/ej_modulos/mimodulo.cpp",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o -c /home/nuria/Pengo/ej_modulos/mimodulo.cpp",
   "file": "/home/nuria/Pengo/ej_modulos/mimodulo.cpp"
 },
 {
   "directory": "/home/nuria/Pengo/build",
-  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o -c /home/nuria/Pengo/ej_modulos/mimodulo2.cpp",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o -c /home/nuria/Pengo/ej_modulos/mimodulo2.cpp",
   "file": "/home/nuria/Pengo/ej_modulos/mimodulo2.cpp"
 },
 {
   "directory": "/home/nuria/Pengo/build",
-  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o -c /home/nuria/Pengo/Escenario/Escenario.cpp",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o -c /home/nuria/Pengo/Escenario/Escenario.cpp",
   "file": "/home/nuria/Pengo/Escenario/Escenario.cpp"
 },
 {
   "directory": "/home/nuria/Pengo/build",
-  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o -c /home/nuria/Pengo/Jugador/Jugador.cpp",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o -c /home/nuria/Pengo/Jugador/Jugador.cpp",
   "file": "/home/nuria/Pengo/Jugador/Jugador.cpp"
+},
+{
+  "directory": "/home/nuria/Pengo/build",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o -c /home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp",
+  "file": "/home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp"
+},
+{
+  "directory": "/home/nuria/Pengo/build",
+  "command": "/usr/bin/clang++-3.8    -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o -c /home/nuria/Pengo/Enemigo/Enemigo.cpp",
+  "file": "/home/nuria/Pengo/Enemigo/Enemigo.cpp"
 }
 ]

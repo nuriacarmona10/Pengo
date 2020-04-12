@@ -6,5 +6,5 @@ CXX_FLAGS =  -std=c++1y -Wall -Wextra -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador 
+CXX_INCLUDES = -I/home/nuria/Pengo/ej_modulos -I/home/nuria/Pengo/Escenario -I/home/nuria/Pengo/Jugador -I/home/nuria/Pengo/fabricaEnemigos -I/home/nuria/Pengo/Enemigo 
 

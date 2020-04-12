@@ -4,10 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/nuria/Pengo/Enemigo/Enemigo.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o"
   "/home/nuria/Pengo/Escenario/Escenario.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o"
   "/home/nuria/Pengo/Jugador/Jugador.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o"
   "/home/nuria/Pengo/ej_modulos/mimodulo.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o"
   "/home/nuria/Pengo/ej_modulos/mimodulo2.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o"
+  "/home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp" "/home/nuria/Pengo/build/CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
@@ -16,6 +18,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../ej_modulos"
   "../Escenario"
   "../Jugador"
+  "../fabricaEnemigos"
+  "../Enemigo"
   )
 
 # Targets to which this target links.

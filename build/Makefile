@@ -136,6 +136,33 @@ libModulos/fast:
 	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/build
 .PHONY : libModulos/fast
 
+Enemigo/Enemigo.o: Enemigo/Enemigo.cpp.o
+
+.PHONY : Enemigo/Enemigo.o
+
+# target to build an object file
+Enemigo/Enemigo.cpp.o:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o
+.PHONY : Enemigo/Enemigo.cpp.o
+
+Enemigo/Enemigo.i: Enemigo/Enemigo.cpp.i
+
+.PHONY : Enemigo/Enemigo.i
+
+# target to preprocess a source file
+Enemigo/Enemigo.cpp.i:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.i
+.PHONY : Enemigo/Enemigo.cpp.i
+
+Enemigo/Enemigo.s: Enemigo/Enemigo.cpp.s
+
+.PHONY : Enemigo/Enemigo.s
+
+# target to generate assembly for a file
+Enemigo/Enemigo.cpp.s:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.s
+.PHONY : Enemigo/Enemigo.cpp.s
+
 Escenario/Escenario.o: Escenario/Escenario.cpp.o
 
 .PHONY : Escenario/Escenario.o
@@ -244,6 +271,33 @@ ej_modulos/mimodulo2.cpp.s:
 	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.s
 .PHONY : ej_modulos/mimodulo2.cpp.s
 
+fabricaEnemigos/fabricaEnemigos.o: fabricaEnemigos/fabricaEnemigos.cpp.o
+
+.PHONY : fabricaEnemigos/fabricaEnemigos.o
+
+# target to build an object file
+fabricaEnemigos/fabricaEnemigos.cpp.o:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o
+.PHONY : fabricaEnemigos/fabricaEnemigos.cpp.o
+
+fabricaEnemigos/fabricaEnemigos.i: fabricaEnemigos/fabricaEnemigos.cpp.i
+
+.PHONY : fabricaEnemigos/fabricaEnemigos.i
+
+# target to preprocess a source file
+fabricaEnemigos/fabricaEnemigos.cpp.i:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.i
+.PHONY : fabricaEnemigos/fabricaEnemigos.cpp.i
+
+fabricaEnemigos/fabricaEnemigos.s: fabricaEnemigos/fabricaEnemigos.cpp.s
+
+.PHONY : fabricaEnemigos/fabricaEnemigos.s
+
+# target to generate assembly for a file
+fabricaEnemigos/fabricaEnemigos.cpp.s:
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.s
+.PHONY : fabricaEnemigos/fabricaEnemigos.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -281,6 +335,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... MiJuego"
 	@echo "... libModulos"
+	@echo "... Enemigo/Enemigo.o"
+	@echo "... Enemigo/Enemigo.i"
+	@echo "... Enemigo/Enemigo.s"
 	@echo "... Escenario/Escenario.o"
 	@echo "... Escenario/Escenario.i"
 	@echo "... Escenario/Escenario.s"
@@ -293,6 +350,9 @@ help:
 	@echo "... ej_modulos/mimodulo2.o"
 	@echo "... ej_modulos/mimodulo2.i"
 	@echo "... ej_modulos/mimodulo2.s"
+	@echo "... fabricaEnemigos/fabricaEnemigos.o"
+	@echo "... fabricaEnemigos/fabricaEnemigos.i"
+	@echo "... fabricaEnemigos/fabricaEnemigos.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

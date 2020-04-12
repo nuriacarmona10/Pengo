@@ -8,6 +8,10 @@ add_library(libModulos STATIC)
 add_subdirectory(ej_modulos)
 add_subdirectory(Escenario)
 add_subdirectory(Jugador)
+add_subdirectory(fabricaEnemigos)
+add_subdirectory(Enemigo)
+
+
 
 
 #Opciones a pasar al compilador de C++

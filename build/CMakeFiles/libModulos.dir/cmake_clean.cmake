@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o"
   "CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o"
   "CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o"
+  "CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o"
+  "CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o"
   "liblibModulos.pdb"
   "liblibModulos.a"
 )

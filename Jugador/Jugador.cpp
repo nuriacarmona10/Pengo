@@ -30,19 +30,34 @@ Jugador *Jugador::getInstance()
    return instance;
 }
 
-void Jugador::update(float deltaTime)
+void Jugador::update(float deltaTime, int dir)
 {
-
+   bool moveD = true;
+   bool moveI = true;
+   bool moveDw = true;
+   bool moveUp = true;
    velocity.x = 0;
    velocity.y = 0;
    prevPos.x = body->getPosition().x;
    prevPos.y = body->getPosition().y;
+
+  
+    // significa que quiere ir contra un muro y vamos a bloquear el movimiento
+      if (dir == 1)
+         moveD = false;
+      else if (dir == 2)
+         moveI = false;
+      else if (dir == 3)
+         moveDw = false;
+      else if (dir == 4)
+         moveUp = false;
+   
    if (Enpaso)
    {
       if (ultimaTecla == 1)
       {
          velocity.x = kVel;
-         avanzar(ultimaTecla, deltaTime, velocity,posTecla.x);
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
       }
       else if (ultimaTecla == 2)
       {
@@ -60,7 +75,8 @@ void Jugador::update(float deltaTime)
          avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
       }
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && moveD)
    {
       velocity.x = kVel;
       ultimaTecla = 1;
@@ -68,7 +84,7 @@ void Jugador::update(float deltaTime)
       avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
    }
 
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && moveI)
    {
       velocity.x = -kVel;
       ultimaTecla = 2;
@@ -76,20 +92,21 @@ void Jugador::update(float deltaTime)
 
       avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && moveDw)
    {
       velocity.y = +kVel;
       ultimaTecla = 3;
       posTecla.y = body->getPosition().y;
       avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && moveUp)
    {
       velocity.y = -kVel;
       ultimaTecla = 4;
-      posTecla.y=body->getPosition().y;
+      posTecla.y = body->getPosition().y;
       avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
    }
+
    else if (velocity.x == 0.0 && velocity.y == 0.0)
    {
       if (ultimaTecla == 1)
@@ -218,21 +235,33 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
 
    //if (animationClock.getElapsedTime().asSeconds() > 0.002)
    //{
-      std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
-      //animationClock.restart();
-      body->move(velocity);
-      if (velocity.y == 0)
-         posJ = body->getPosition().x;
-      if (velocity.x == 0)
-         posJ = body->getPosition().y;
+   std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
+   //animationClock.restart();
+   body->move(velocity);
+   if (velocity.y == 0)
+      posJ = body->getPosition().x;
+   if (velocity.x == 0)
+      posJ = body->getPosition().y;
 
-      std::cout << "Esta:" << posJ << std::endl;
+   std::cout << "Esta:" << posJ << std::endl;
 
-      std::cout << "quiere:" << destino << std::endl;
+   std::cout << "quiere:" << destino << std::endl;
    //}
    if (posJ == destino)
    {
       Enpaso = false;
       std::cout << "Enpaso:" << Enpaso << std::endl;
    }
+}
+int Jugador::getPosx()
+{
+   return body->getPosition().x / 32;
+}
+int Jugador::getPosy()
+{
+   return body->getPosition().y / 32;
+}
+int Jugador::getUltimaTecla()
+{
+   return ultimaTecla;
 }

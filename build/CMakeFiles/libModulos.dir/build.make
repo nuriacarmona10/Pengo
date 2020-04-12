@@ -153,12 +153,62 @@ CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o.provides: CMakeFiles/libModulos.
 CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o.provides.build: CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o
 
 
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o: CMakeFiles/libModulos.dir/flags.make
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o: ../fabricaEnemigos/fabricaEnemigos.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuria/Pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o"
+	/usr/bin/clang++-3.8   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o -c /home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp
+
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.i"
+	/usr/bin/clang++-3.8  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp > CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.i
+
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.s"
+	/usr/bin/clang++-3.8  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.cpp -o CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.s
+
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.requires:
+
+.PHONY : CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.requires
+
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.provides: CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.requires
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.provides.build
+.PHONY : CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.provides
+
+CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.provides.build: CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o
+
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: CMakeFiles/libModulos.dir/flags.make
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: ../Enemigo/Enemigo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuria/Pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o"
+	/usr/bin/clang++-3.8   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o -c /home/nuria/Pengo/Enemigo/Enemigo.cpp
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.i"
+	/usr/bin/clang++-3.8  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nuria/Pengo/Enemigo/Enemigo.cpp > CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.i
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.s"
+	/usr/bin/clang++-3.8  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nuria/Pengo/Enemigo/Enemigo.cpp -o CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.s
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.requires:
+
+.PHONY : CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.requires
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.provides: CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.requires
+	$(MAKE) -f CMakeFiles/libModulos.dir/build.make CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.provides.build
+.PHONY : CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.provides
+
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.provides.build: CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o
+
+
 # Object files for target libModulos
 libModulos_OBJECTS = \
 "CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o" \
 "CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o" \
 "CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o" \
-"CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o"
+"CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o" \
+"CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o" \
+"CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o"
 
 # External object files for target libModulos
 libModulos_EXTERNAL_OBJECTS =
@@ -167,9 +217,11 @@ liblibModulos.a: CMakeFiles/libModulos.dir/ej_modulos/mimodulo.cpp.o
 liblibModulos.a: CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o
 liblibModulos.a: CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o
 liblibModulos.a: CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o
+liblibModulos.a: CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o
+liblibModulos.a: CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o
 liblibModulos.a: CMakeFiles/libModulos.dir/build.make
 liblibModulos.a: CMakeFiles/libModulos.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nuria/Pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library liblibModulos.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nuria/Pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library liblibModulos.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/libModulos.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/libModulos.dir/link.txt --verbose=$(VERBOSE)
 
@@ -182,6 +234,8 @@ CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/ej_modulos/mimodul
 CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/ej_modulos/mimodulo2.cpp.o.requires
 CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o.requires
 CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/Jugador/Jugador.cpp.o.requires
+CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/fabricaEnemigos/fabricaEnemigos.cpp.o.requires
+CMakeFiles/libModulos.dir/requires: CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o.requires
 
 .PHONY : CMakeFiles/libModulos.dir/requires
 

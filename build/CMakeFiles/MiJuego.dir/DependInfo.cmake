@@ -13,6 +13,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../ej_modulos"
   "../Escenario"
   "../Jugador"
+  "../fabricaEnemigos"
+  "../Enemigo"
   )
 
 # Targets to which this target links.

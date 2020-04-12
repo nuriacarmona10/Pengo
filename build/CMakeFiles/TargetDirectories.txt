@@ -8,3 +8,7 @@
 /home/nuria/Pengo/build/Escenario/CMakeFiles/rebuild_cache.dir
 /home/nuria/Pengo/build/Jugador/CMakeFiles/edit_cache.dir
 /home/nuria/Pengo/build/Jugador/CMakeFiles/rebuild_cache.dir
+/home/nuria/Pengo/build/fabricaEnemigos/CMakeFiles/edit_cache.dir
+/home/nuria/Pengo/build/fabricaEnemigos/CMakeFiles/rebuild_cache.dir
+/home/nuria/Pengo/build/Enemigo/CMakeFiles/edit_cache.dir
+/home/nuria/Pengo/build/Enemigo/CMakeFiles/rebuild_cache.dir

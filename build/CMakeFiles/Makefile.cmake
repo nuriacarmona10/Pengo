@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
+  "../Enemigo/CMakeLists.txt"
   "../Escenario/CMakeLists.txt"
   "../Jugador/CMakeLists.txt"
   "CMakeFiles/3.5.1/CMakeCCompiler.cmake"
@@ -15,6 +16,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.5.1/CMakeSystem.cmake"
   "../cmake_modules/FindSFML.cmake"
   "../ej_modulos/CMakeLists.txt"
+  "../fabricaEnemigos/CMakeLists.txt"
   "/usr/share/cmake-3.5/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCommonLanguageInclude.cmake"
@@ -47,6 +49,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "ej_modulos/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Escenario/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Jugador/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "fabricaEnemigos/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "Enemigo/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:

@@ -6,9 +6,17 @@
 
 #IncludeRegexTransform: 
 
+/home/nuria/Pengo/Enemigo/Enemigo.h
+SFML/Graphics.hpp
+-
+
 /home/nuria/Pengo/Escenario/Escenario.h
 SFML/Graphics.hpp
 -
+iostream
+-
+../Enemigo/Enemigo.h
+/home/nuria/Pengo/Enemigo/Enemigo.h
 
 /home/nuria/Pengo/Jugador/Jugador.h
 SFML/Graphics.hpp
@@ -17,6 +25,12 @@ SFML/Graphics.hpp
 /home/nuria/Pengo/Escenario/Escenario.h
 
 /home/nuria/Pengo/ej_modulos/mimodulo.h
+
+/home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.h
+../Enemigo/Enemigo.h
+/home/nuria/Pengo/Enemigo/Enemigo.h
+SFML/Graphics.hpp
+-
 
 /home/nuria/Pengo/include/config.h
 
@@ -35,4 +49,6 @@ Escenario/Escenario.h
 /home/nuria/Pengo/Escenario/Escenario.h
 Jugador/Jugador.h
 /home/nuria/Pengo/Jugador/Jugador.h
+fabricaEnemigos/fabricaEnemigos.h
+/home/nuria/Pengo/fabricaEnemigos/fabricaEnemigos.h
 

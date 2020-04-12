@@ -9,15 +9,19 @@ public:
     static Jugador *getInstance();
     ~Jugador();
     void draw(sf::RenderWindow &window, float percentTick);
-    void update(float deltaTime);
+    void update(float deltaTime, int dir);
     void animacion(int row, float deltaTime, bool faceRight, int startFrame, int endFrame);
-    void avanzar(int n,float deltaTime,sf::Vector2f velocity,int pos);
+    void avanzar(int n, float deltaTime, sf::Vector2f velocity, int pos);
+    //getters and setters
+    int getPosx();
+    int getPosy();
+    int getUltimaTecla();
 
 private:
     sf::IntRect rect;
     sf::Clock animationClock;
     bool Enpaso;
-     sf::Vector2f posTecla;
+    sf::Vector2f posTecla;
     sf::Vector2f velocity;
     Jugador(/* args */);
     int ultimaTecla;

@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "../Enemigo/Enemigo.h"
 
 #ifndef ESCENARIO_H
 #define ESCENARIO_H
@@ -9,14 +11,17 @@ private:
     sf::Sprite *body;
     sf::Texture *tex;
     Escenario();
-    int** matriz;
+    std::vector<Enemigo *> enemigos;
+    int **matriz;
     static Escenario *instance;
 
 public:
     static Escenario *getInstance();
     void crearMatriz();
-    void draw(sf::RenderWindow& window,float percentTick);
+    void update(float deltaTime);
+    void draw(sf::RenderWindow &window, float percentTick);
     ~Escenario();
+    void checkColisions(float timeElapsed);
 };
 
 #endif

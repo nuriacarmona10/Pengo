@@ -5,6 +5,9 @@
 #include "ej_modulos/mimodulo.h"
 #include "Escenario/Escenario.h"
 #include "Jugador/Jugador.h"
+#include "fabricaEnemigos/fabricaEnemigos.h"
+
+
 
 #define UPDATE_TICK_TIME 1000 / 17
 
@@ -36,10 +39,9 @@ int main()
     if (updateClock.getElapsedTime().asMilliseconds() > UPDATE_TICK_TIME)
     {
       float timeElapsed = updateClock.restart().asSeconds();
-      Jugador::getInstance()->update(timeElapsed);
+      Escenario::getInstance()->update(timeElapsed);
     }
     Escenario::getInstance()->draw(window, percentTick);
-    
     Jugador::getInstance()->draw(window,percentTick);
 
     window.display();
