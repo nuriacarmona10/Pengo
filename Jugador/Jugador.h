@@ -17,6 +17,7 @@ private:
     sf::IntRect rect;
     sf::Clock animationClock;
     bool Enpaso;
+     sf::Vector2f posTecla;
     sf::Vector2f velocity;
     Jugador(/* args */);
     int ultimaTecla;

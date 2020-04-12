@@ -45,7 +45,7 @@ int main()
     window.display();
     while (window.pollEvent(event))
     {
-
+      
       switch (event.type)
       {
 

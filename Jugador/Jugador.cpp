@@ -1,6 +1,6 @@
 #include "Jugador.h"
 #include "iostream"
-#define kVel 1;
+#define kVel 4;
 
 Jugador *Jugador::instance = 0;
 
@@ -14,6 +14,9 @@ Jugador::Jugador(/* args */)
    switchTime = 0.2f;
    totalTime = 0.0f;
    Enpaso = false;
+   animationClock.restart();
+   posTecla.x = 0;
+   posTecla.y = 0;
 }
 Jugador::~Jugador()
 {
@@ -34,30 +37,58 @@ void Jugador::update(float deltaTime)
    velocity.y = 0;
    prevPos.x = body->getPosition().x;
    prevPos.y = body->getPosition().y;
-   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !Enpaso)
+   if (Enpaso)
+   {
+      if (ultimaTecla == 1)
+      {
+         velocity.x = kVel;
+         avanzar(ultimaTecla, deltaTime, velocity,posTecla.x);
+      }
+      else if (ultimaTecla == 2)
+      {
+         velocity.x = -kVel;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
+      }
+      else if (ultimaTecla == 3)
+      {
+         velocity.y = +kVel;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      }
+      else if (ultimaTecla == 4)
+      {
+         velocity.y = -kVel;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      }
+   }
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
    {
       velocity.x = kVel;
       ultimaTecla = 1;
-      avanzar(ultimaTecla, deltaTime, velocity, body->getPosition().x);
+      posTecla.x = body->getPosition().x;
+      avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
    }
 
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !Enpaso)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
    {
       velocity.x = -kVel;
       ultimaTecla = 2;
-      avanzar(ultimaTecla, deltaTime, velocity, body->getPosition().x);
+      posTecla.x = body->getPosition().x;
+
+      avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !Enpaso)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
    {
       velocity.y = +kVel;
       ultimaTecla = 3;
-      avanzar(ultimaTecla, deltaTime, velocity, body->getPosition().y);
+      posTecla.y = body->getPosition().y;
+      avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !Enpaso)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
    {
       velocity.y = -kVel;
       ultimaTecla = 4;
-      avanzar(ultimaTecla, deltaTime, velocity, body->getPosition().y);
+      posTecla.y=body->getPosition().y;
+      avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
    }
    else if (velocity.x == 0.0 && velocity.y == 0.0)
    {
@@ -150,7 +181,7 @@ void Jugador::animacion(int row, float deltaTime, bool faceRight, int startFrame
 void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
 {
    // 1: derecha 2:izquierda 3:Down 4:Up
-   
+
    int destino;
    Enpaso = true;
    float posJ = body->getPosition().x;
@@ -181,29 +212,27 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
       posJ = body->getPosition().y;
    }
 
-   while (abs(posJ) != destino)
-   {
+   //aqui tengo que llamar al draw de alguna manera
 
-      std::cout << "ESTA :" << posJ << std::endl;
+   /*int esp = velocity.x * deltaTime + 1;*/
 
-      /*int esp = velocity.x * deltaTime + 1;*/
-      
+   //if (animationClock.getElapsedTime().asSeconds() > 0.002)
+   //{
+      std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
+      //animationClock.restart();
+      body->move(velocity);
+      if (velocity.y == 0)
+         posJ = body->getPosition().x;
+      if (velocity.x == 0)
+         posJ = body->getPosition().y;
 
-     // if (animationClock.getElapsedTime().asSeconds() > 0.5)
-     // {
-         std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
+      std::cout << "Esta:" << posJ << std::endl;
 
-         animationClock.restart();
-
-         body->move(velocity);
-         if (velocity.y == 0)
-            posJ = body->getPosition().x;
-         if (velocity.x == 0)
-            posJ = body->getPosition().y;
-
-         // std::cout << "delta:" << deltaTime *velocity.x<< std::endl;
-      }
+      std::cout << "quiere:" << destino << std::endl;
    //}
-
-   Enpaso = false;
+   if (posJ == destino)
+   {
+      Enpaso = false;
+      std::cout << "Enpaso:" << Enpaso << std::endl;
+   }
 }
