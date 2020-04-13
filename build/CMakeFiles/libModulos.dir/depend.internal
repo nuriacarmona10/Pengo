@@ -4,6 +4,8 @@
 CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o
  /home/nuria/Pengo/Enemigo/Enemigo.cpp
  /home/nuria/Pengo/Enemigo/Enemigo.h
+ /home/nuria/Pengo/Escenario/Escenario.h
+ /home/nuria/Pengo/Jugador/Jugador.h
 CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o
  /home/nuria/Pengo/Enemigo/Enemigo.h
  /home/nuria/Pengo/Escenario/Escenario.cpp

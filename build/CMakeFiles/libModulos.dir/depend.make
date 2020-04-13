@@ -3,6 +3,8 @@
 
 CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: ../Enemigo/Enemigo.cpp
 CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: ../Enemigo/Enemigo.h
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: ../Escenario/Escenario.h
+CMakeFiles/libModulos.dir/Enemigo/Enemigo.cpp.o: ../Jugador/Jugador.h
 
 CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o: ../Enemigo/Enemigo.h
 CMakeFiles/libModulos.dir/Escenario/Escenario.cpp.o: ../Escenario/Escenario.cpp

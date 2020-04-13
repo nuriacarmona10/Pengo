@@ -4,7 +4,7 @@
 
 #include "iostream"
 #define filas 20
-#define columnas 23
+#define columnas 20
 
 Escenario *Escenario::instance = 0;
 
@@ -21,7 +21,7 @@ Escenario::Escenario(/* args */)
     }
     body->setTexture(*tex);
     crearMatriz();
-    sf::Vector2f pos;
+    sf::Vector2f pos; // posicion enemigo
     pos.x = 96;
     pos.y = 96;
 
@@ -35,78 +35,47 @@ Escenario::~Escenario()
 void Escenario::update(float timeElapsed)
 {
 
-    checkColisions(timeElapsed);
-}
-void Escenario::checkColisions(float timeElapsed)
-{
-    int dir=-1;
-    Jugador *player = Jugador::getInstance();
-    sf::Vector2f destino;
-    int playerx = player->getPosx(); // columna en la que esta 
-    int playery = player->getPosy(); // fila en la que esta
-    destino.x = playerx;
-    destino.y = playery;
-    if (player->getUltimaTecla() == 1)
-    {
-        destino.x = playerx + 1;
-    }
-    else if (player->getUltimaTecla() == 2)
-    {
-        destino.x = playerx - 1;
-    }
-    else if (player->getUltimaTecla() == 3)
-    {
-        destino.y = playery + 1;
-    }
-    else if (player->getUltimaTecla() == 4)
-    {
-        destino.y = playery - 1;
-    }
-    int casillay=destino.y;
-    int casillax=destino.x;
-
-    if (matriz[casillay][casillax] == 2)
-    {
-        Jugador::getInstance()->update(timeElapsed, player->getUltimaTecla());
-    }
-    else {
-        Jugador::getInstance()->update(timeElapsed, dir);
-
-    }
+    Jugador::getInstance()->update(timeElapsed);
+    enemigos[0]->Update(timeElapsed);
     
-    Jugador::getInstance()->update(timeElapsed, dir);
 }
+
 void Escenario::draw(sf::RenderWindow &window, float percentTick)
 {
+
     for (int i = 0; i < filas; i++)
     {
         for (int j = 0; j < columnas; j++)
         {
+
             if (matriz[i][j] == 0)
             {
                 body->setTextureRect(sf::IntRect(8 * 32, 3 * 32, 32, 32));
-                body->setPosition(i * 32, j * 32);
+                body->setPosition(j * 32, i * 32);
                 window.draw(*body);
             }
             else if (matriz[i][j] == 2)
             {
                 body->setTextureRect(sf::IntRect(7 * 32, 0 * 32, 32, 32));
-                body->setPosition(i * 32, j * 32);
+                body->setPosition(j * 32, i * 32);
                 window.draw(*body);
             }
             else if (matriz[i][j] == 5)
             {
                 body->setTextureRect(sf::IntRect(3 * 32, 1 * 32, 32, 32));
-                body->setPosition(i * 32, j * 32);
+                body->setPosition(j * 32, i * 32);
                 window.draw(*body);
             }
+            // std::cout << matriz[i][j] << "  ";
         }
+        //std::cout << std::endl;
     }
 
     enemigos[0]->Draw(window, percentTick);
 }
 void Escenario::crearMatriz()
 {
+    std::cout << "MATRIZ CREAR" << std::endl;
 
     for (int i = 0; i < filas; i++)
     {
@@ -129,7 +98,7 @@ void Escenario::crearMatriz()
             }
             else
             {
-                int num = 1 + rand() % 4; // eso me saca 1 y 2 : 1 para vacio y 2 para bloques
+                int num = rand() % (3 - 1 + 1) + 1; // eso me saca 1 y 2 : 1 para vacio y 2 para bloques
 
                 matriz[i][j] = num;
             }
@@ -146,7 +115,7 @@ void Escenario::crearMatriz()
     matriz[8][15] = 5;
     matriz[15][2] = 5;
     //aqui el zelda
-    matriz[10][11] = 6;
+    matriz[10][10] = 6; // 10*32=320; 11*32=352
 }
 Escenario *Escenario::getInstance()
 {
@@ -155,4 +124,8 @@ Escenario *Escenario::getInstance()
         instance = new Escenario();
     }
     return instance;
+}
+int **Escenario::getMatriz()
+{
+    return matriz;
 }

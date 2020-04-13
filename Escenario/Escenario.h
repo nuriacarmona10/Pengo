@@ -22,6 +22,7 @@ public:
     void draw(sf::RenderWindow &window, float percentTick);
     ~Escenario();
     void checkColisions(float timeElapsed);
+    int** getMatriz();
 };
 
 #endif

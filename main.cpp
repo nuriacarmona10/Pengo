@@ -17,7 +17,7 @@ int main()
   sf::Clock updateClock;
 
   //Creamos una ventana
-  sf::RenderWindow window(sf::VideoMode(640, 736), "P0. Fundamentos de los Videojuegos. DCCIA");
+  sf::RenderWindow window(sf::VideoMode(640, 640), "P0. Fundamentos de los Videojuegos. DCCIA");
 
   //Le pongo el centroide donde corresponde
   // sprite.setOrigin(75 / 2, 75 / 2);

@@ -11,6 +11,10 @@ Enemigo.h
 /home/nuria/Pengo/Enemigo/Enemigo.h
 iostream
 /home/nuria/Pengo/Enemigo/iostream
+../Escenario/Escenario.h
+/home/nuria/Pengo/Escenario/Escenario.h
+../Jugador/Jugador.h
+/home/nuria/Pengo/Jugador/Jugador.h
 
 /home/nuria/Pengo/Enemigo/Enemigo.h
 SFML/Graphics.hpp

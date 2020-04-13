@@ -9,7 +9,7 @@ Jugador::Jugador(/* args */)
    tex = new sf::Texture;
    body = new sf::Sprite;
    tex->loadFromFile("resources/Zelda32.png");
-   body->setPosition(320, 352);
+   body->setPosition(320, 320);
    body->setTexture(*tex);
    switchTime = 0.2f;
    totalTime = 0.0f;
@@ -30,28 +30,16 @@ Jugador *Jugador::getInstance()
    return instance;
 }
 
-void Jugador::update(float deltaTime, int dir)
+void Jugador::update(float deltaTime)
 {
-   bool moveD = true;
-   bool moveI = true;
-   bool moveDw = true;
-   bool moveUp = true;
+
    velocity.x = 0;
    velocity.y = 0;
    prevPos.x = body->getPosition().x;
    prevPos.y = body->getPosition().y;
 
-  
-    // significa que quiere ir contra un muro y vamos a bloquear el movimiento
-      if (dir == 1)
-         moveD = false;
-      else if (dir == 2)
-         moveI = false;
-      else if (dir == 3)
-         moveDw = false;
-      else if (dir == 4)
-         moveUp = false;
-   
+   // significa que quiere ir contra un muro y vamos a bloquear el movimiento
+
    if (Enpaso)
    {
       if (ultimaTecla == 1)
@@ -76,35 +64,46 @@ void Jugador::update(float deltaTime, int dir)
       }
    }
 
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && moveD)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
    {
       velocity.x = kVel;
       ultimaTecla = 1;
-      posTecla.x = body->getPosition().x;
-      avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
+      if (checkColisions())
+      {
+         posTecla.x = body->getPosition().x;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
+      }
    }
 
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && moveI)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
    {
       velocity.x = -kVel;
       ultimaTecla = 2;
-      posTecla.x = body->getPosition().x;
-
-      avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
+      if (checkColisions())
+      {
+         posTecla.x = body->getPosition().x;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.x);
+      }
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && moveDw)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
    {
       velocity.y = +kVel;
       ultimaTecla = 3;
-      posTecla.y = body->getPosition().y;
-      avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      if (checkColisions())
+      {
+         posTecla.y = body->getPosition().y;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      }
    }
-   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && moveUp)
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
    {
       velocity.y = -kVel;
       ultimaTecla = 4;
-      posTecla.y = body->getPosition().y;
-      avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      if (checkColisions())
+      {
+         posTecla.y = body->getPosition().y;
+         avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
+      }
    }
 
    else if (velocity.x == 0.0 && velocity.y == 0.0)
@@ -195,6 +194,50 @@ void Jugador::animacion(int row, float deltaTime, bool faceRight, int startFrame
 
    body->setTextureRect(rect);
 }
+bool Jugador::checkColisions()
+{
+
+   int **matriz = Escenario::getInstance()->getMatriz();
+   Jugador *player = Jugador::getInstance();
+   sf::Vector2f destino;
+   int playerx = player->getPosx(); // columna en la que esta
+   int playery = player->getPosy(); // fila en la que esta
+   destino.x = playerx;
+   destino.y = playery;
+
+   if (player->getUltimaTecla() == 1)
+   {
+      destino.x = playerx + 1;
+   }
+   else if (player->getUltimaTecla() == 2)
+   {
+      destino.x = playerx - 1;
+   }
+   else if (player->getUltimaTecla() == 3)
+   {
+      destino.y = playery + 1;
+   }
+   else if (player->getUltimaTecla() == 4)
+   {
+      destino.y = playery - 1;
+   }
+   int casillay = destino.y;
+   int casillax = destino.x;
+   std::cout << "player.x" << playerx << std::endl;
+   std::cout << "player.y" << playery << std::endl;
+   std::cout << "destino.x" << casillax << std::endl;
+   std::cout << "destino.y" << casillay << std::endl;
+   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;
+
+   if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
+   {
+      return false;
+   }
+   else
+   {
+      return true;
+   }
+}
 void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
 {
    // 1: derecha 2:izquierda 3:Down 4:Up
@@ -235,7 +278,7 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
 
    //if (animationClock.getElapsedTime().asSeconds() > 0.002)
    //{
-   std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
+   // std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
    //animationClock.restart();
    body->move(velocity);
    if (velocity.y == 0)
@@ -243,23 +286,23 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
    if (velocity.x == 0)
       posJ = body->getPosition().y;
 
-   std::cout << "Esta:" << posJ << std::endl;
+   /* std::cout << "Esta:" << posJ << std::endl;
 
-   std::cout << "quiere:" << destino << std::endl;
+   std::cout << "quiere:" << destino << std::endl;*/
    //}
    if (posJ == destino)
    {
       Enpaso = false;
-      std::cout << "Enpaso:" << Enpaso << std::endl;
+      //std::cout << "Enpaso:" << Enpaso << std::endl;
    }
 }
 int Jugador::getPosx()
 {
-   return body->getPosition().x / 32;
+   return (body->getPosition().x / 32);
 }
 int Jugador::getPosy()
 {
-   return body->getPosition().y / 32;
+   return (body->getPosition().y / 32);
 }
 int Jugador::getUltimaTecla()
 {
