@@ -10,6 +10,7 @@ private:
     sf::Texture *tex;
     bool muerto;
     int direccion;
+    sf::Vector2f posTecla; // posicion cuando le dio a la tec
     sf::Vector2f prevPos;
     sf::Vector2f velocity;
     sf::Vector2f currentPos;
@@ -21,7 +22,7 @@ private:
 public:
     int getColumna();
     int getFila();
-    void avanzar(int n, float deltaTime, sf::Vector2f velocity, int pos);
+    void avanzar(int n, float deltaTime);
     bool checkColisions(int dir);
     void animacion(int row, float deltaTime, bool faceRight, int startFrame, int endFrame);
     Enemigo(sf::Sprite *body, int posx, int posy);

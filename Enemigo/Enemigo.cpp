@@ -3,7 +3,7 @@
 #include "../Escenario/Escenario.h"
 #include "../Jugador/Jugador.h"
 
-#define kVel 3
+#define kVel 4
 
 Enemigo::Enemigo(sf::Sprite *body, int posx, int posy)
 {
@@ -11,7 +11,9 @@ Enemigo::Enemigo(sf::Sprite *body, int posx, int posy)
     body->setPosition(posx, posy);
     tiempoTotal = 0.0f;
     direccion = 3;
-    Enpaso=false;
+    Enpaso = false;
+    posTecla.x = posx;
+    posTecla.y = posy;
 }
 Enemigo::~Enemigo()
 {
@@ -23,83 +25,57 @@ void Enemigo::Update(float deltaTime)
     velocity.y = 0;
     prevPos.x = body->getPosition().x;
     prevPos.y = body->getPosition().y;
+    //std::cout << "RAND:" << direccion << std::endl;
     if (Enpaso)
     {
+        std::cout << "ENTRA 1" << std::endl;
+
         if (direccion == 1)
         {
             velocity.x = kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().x);
+            avanzar(direccion, deltaTime);
         }
         else if (direccion == 2)
         {
             velocity.x = -kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().x);
+            avanzar(direccion, deltaTime);
         }
         else if (direccion == 3)
         {
             velocity.y = +kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().y);
+            avanzar(direccion, deltaTime);
         }
         else if (direccion == 4)
         {
             velocity.y = -kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().y);
+            avanzar(direccion, deltaTime);
         }
     }
-    else if (direccion == 1)
-    { // derecha
-        if (checkColisions(1))
+    else  // si ya ha terminado el paso hasta la proxima casilla
+    {                        // derecha
+        velocity.x = 0;
+        velocity.y = 0;
+        
+
+        if (!checkColisions(direccion))
         {
             animacion(3, deltaTime, true, 0, 3);
-            velocity.x = kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().x);
+            /*if (direccion == 1 || direccion == 2) // I dont like this
+                posTecla.y = body->getPosition().y;
+            else
+                posTecla.x = body->getPosition().x;*/
+
+            avanzar(direccion, deltaTime);
         }
         else
         {
+                    
+
             direccion = rand() % (4 - 1 + 1) + 1; // (max-min+1)+min  me da un numero del 1 al 4
         }
     }
-    if (direccion == 2)
-    { // derecha
-        if (checkColisions(2))
-        {
-            animacion(3, deltaTime, false, 0, 3);
-            velocity.x = -kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().x);
-        }
-        else
-        {
-            direccion = rand() % (4 - 1 + 1) + 1;
-        }
-    }
-    if (direccion == 3)
-    { // derecha
-        if (checkColisions(3))
-        {
-            animacion(2, deltaTime, true, 0, 3);
-            velocity.y = kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().y);
-        }
-        else
-        {
-            direccion = rand() % (4 - 1 + 1) + 1;
-        }
-    }
-    if (direccion == 4)
-    { // derecha
-        if (checkColisions(4))
-        {
-            animacion(1, deltaTime, true, 0, 3);
-            velocity.y = -kVel;
-            avanzar(direccion, deltaTime, velocity, body->getPosition().y);
-        }
-        else
-        {
-            direccion = rand() % (4 - 1 + 1) + 1;
-        }
-    }
-    imagenActual.x = body->getPosition().x;
-    imagenActual.y = body->getPosition().y;
+    imagenActual.x = posTecla.x;
+    imagenActual.y = posTecla.y;
 }
 
 void Enemigo::Draw(sf::RenderWindow &window, float percentTick)
@@ -164,7 +140,9 @@ bool Enemigo::checkColisions(int dir)
     //Jugador *player = Jugador::getInstance();
     sf::Vector2f destino;
     destino.x = getColumna();
+    //std::cout << "Columna" << destino.x << std::endl;
     destino.y = getFila();
+    //std::cout << "Fila " << destino.y << std::endl;
 
     if (dir == 1)
     {
@@ -184,52 +162,59 @@ bool Enemigo::checkColisions(int dir)
     }
     int casillay = destino.y;
     int casillax = destino.x;
+    std::cout << "Comprobando destino:" << std::endl;
     std::cout << "destino.x" << casillax << std::endl;
     std::cout << "destino.y" << casillay << std::endl;
     std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;
 
     if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
     {
-        return false;
+    std::cout << " colision" <<  std::endl;
+
+        return true;
     }
     else
     {
-        return true;
+    std::cout << "no colision" <<  std::endl;
+
+        Enpaso = true;
+        posTecla.x = destino.x*32;
+        posTecla.y = destino.y*32;
+        return false;
+
     }
 }
-void Enemigo::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
+void Enemigo::avanzar(int dir, float deltaTime)
 {
     // 1: derecha 2:izquierda 3:Down 4:Up
+       std::cout << "estoy en:" << body->getPosition().x << ", " << body->getPosition().y << std::endl;
+       std::cout << "voy a:" << posTecla.x << ", " << posTecla.y << std::endl;
+       std::cout << "direccion:" << dir << std::endl;
 
-    int destino;
+    //int destino = 0;
     Enpaso = true;
-    int posJ = body->getPosition().x;
-
+    //float posJ = body->getPosition().x;
     if (dir == 1)
     {
-        animacion(3, deltaTime, true, 0, 3);
-
-        destino = abs(pos) + 32;
-    }
+        animacion(3, deltaTime, true, 0, 3);   
+        velocity.x = kVel;
+        //destino = posTecla.x + 32;
+        
+    }   
     else if (dir == 2)
     {
         animacion(3, deltaTime, false, 0, 3);
-
-        destino = abs(pos) - 32;
+        velocity.x = -kVel;
     }
     else if (dir == 3)
     {
         animacion(2, deltaTime, true, 0, 3);
-
-        destino = abs(pos) + 32;
-        posJ = body->getPosition().y;
+        velocity.y = kVel;
     }
     else if (dir == 4)
     {
-        animacion(1, deltaTime, true, 0, 3);
-
-        destino = abs(pos) - 32;
-        posJ = body->getPosition().y;
+        animacion(1, deltaTime, true, 0, 5);
+        velocity.y = -kVel;
     }
 
     //aqui tengo que llamar al draw de alguna manera
@@ -241,16 +226,16 @@ void Enemigo::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
     // std::cout << "Tiempo:" << animationClock.getElapsedTime().asSeconds() << std::endl;
     //animationClock.restart();
     body->move(velocity);
-    if (velocity.y == 0)
+    /*if (velocity.y == 0)
         posJ = body->getPosition().x;
     if (velocity.x == 0)
-        posJ = body->getPosition().y;
+        posJ = body->getPosition().y;*/
 
     /* std::cout << "Esta:" << posJ << std::endl;
 
    std::cout << "quiere:" << destino << std::endl;*/
     //}
-    if (posJ == destino)
+    if (body->getPosition().x == posTecla.x && body->getPosition().y == posTecla.y)
     {
         Enpaso = false;
         //std::cout << "Enpaso:" << Enpaso << std::endl;
