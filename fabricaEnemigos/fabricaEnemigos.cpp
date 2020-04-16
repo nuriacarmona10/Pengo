@@ -5,12 +5,13 @@ fabricaEnemigos *fabricaEnemigos::instance = 0;
 
 fabricaEnemigos::fabricaEnemigos()
 {
-    body = new sf::Sprite;
+    
     tex = new sf::Texture;
    if(!tex->loadFromFile("resources/Enemy.png")){
        std::cout<<"VA MAL ESTA MIERDA" <<std::endl;
    }
-    body->setTexture(*tex);
+    body.setTexture(*tex);
+    
 }
 
 fabricaEnemigos::~fabricaEnemigos()

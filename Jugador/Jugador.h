@@ -17,13 +17,19 @@ public:
     int getPosx();
     int getPosy();
     int getUltimaTecla();
+    void updateMatriz(int fila,int colum);
+    void engolpe();
 
 private:
     sf::IntRect rect;
     sf::Clock animationClock;
+    sf::Clock dieClock;
     bool Enpaso;
+    sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;
+    int vida;
+    bool Engolpe;
     Jugador(/* args */);
     int ultimaTecla;
     sf::Sprite *body;

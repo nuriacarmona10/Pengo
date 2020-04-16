@@ -10,7 +10,7 @@ class fabricaEnemigos
 private:
     fabricaEnemigos(/* args */);
     static fabricaEnemigos* instance;
-    sf::Sprite* body;
+    sf::Sprite body;
     sf::Texture* tex;
 public:
     ~fabricaEnemigos();

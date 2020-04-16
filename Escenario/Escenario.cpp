@@ -21,11 +21,10 @@ Escenario::Escenario(/* args */)
     }
     body->setTexture(*tex);
     crearMatriz();
-    sf::Vector2f pos; // posicion enemigo
-    pos.x = 96;
-    pos.y = 96;
 
     enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(96, 96));
+    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(544, 320));
+    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(480, 64));
 }
 
 Escenario::~Escenario()
@@ -36,8 +35,13 @@ void Escenario::update(float timeElapsed)
 {
 
     Jugador::getInstance()->update(timeElapsed);
-    enemigos[0]->Update(timeElapsed);
-    
+    int cont = 0;
+    for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
+    {
+        enemigos[cont]->Update(timeElapsed);
+
+        cont++;
+    }
 }
 
 void Escenario::draw(sf::RenderWindow &window, float percentTick)
@@ -71,7 +75,13 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
         //std::cout << std::endl;
     }
 
-    enemigos[0]->Draw(window, percentTick);
+    int cont = 0;
+    for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
+    {
+        enemigos[cont]->Draw(window, percentTick);
+
+        cont++;
+    }
 }
 void Escenario::crearMatriz()
 {
@@ -108,7 +118,7 @@ void Escenario::crearMatriz()
     }
     // aquí saldrán los Snow-Bee
     matriz[3][3] = 4;
-    matriz[18][21] = 4;
+    matriz[17][10] = 4;
     matriz[15][17] = 4;
     //Aquí saldrán las gemas
     matriz[4][32] = 5;

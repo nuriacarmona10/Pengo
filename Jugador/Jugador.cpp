@@ -14,9 +14,13 @@ Jugador::Jugador(/* args */)
    switchTime = 0.2f;
    totalTime = 0.0f;
    Enpaso = false;
+   Engolpe = false;
    animationClock.restart();
    posTecla.x = 0;
    posTecla.y = 0;
+   lastCasilla.x = 10;
+   lastCasilla.y = 10;
+   vida = 3;
 }
 Jugador::~Jugador()
 {
@@ -129,6 +133,14 @@ void Jugador::update(float deltaTime)
          animacion(10, deltaTime, true, 0, 7);
       }
    }
+   if (Engolpe)
+   {
+      animacion(6, deltaTime, true, 0, 2);
+      if (dieClock.getElapsedTime().asSeconds() == 2)
+      {
+         Engolpe = false;
+      }
+   }
 
    // body->move((velocity * deltaTime));
 
@@ -223,16 +235,28 @@ bool Jugador::checkColisions()
    }
    int casillay = destino.y;
    int casillax = destino.x;
-   std::cout << "player.x" << playerx << std::endl;
+   /* std::cout << "player.x" << playerx << std::endl;
    std::cout << "player.y" << playery << std::endl;
    std::cout << "destino.x" << casillax << std::endl;
    std::cout << "destino.y" << casillay << std::endl;
-   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;
+   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
 
    if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
    {
       return false;
    }
+   /*else if(matriz[casillay][casillax] == 4 ) { // colisiona con el enemigo
+       if(vida=0) {
+          std::cout<<"HAS MUERTO" <<std::endl;
+       }
+       else {
+          Engolpe=true;
+          std::cout<<"Vidas: " <<vida<<std::endl;
+          
+          vida--;
+       }
+
+   }*/
    else
    {
       return true;
@@ -245,14 +269,17 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
    int destino;
    Enpaso = true;
    float posJ = body->getPosition().x;
+   int columna = 0;
+   int fila = 0;
    if (dir == 1)
    {
       animacion(1, deltaTime, true, 0, 5);
-
+      columna = 1;
       destino = abs(pos) + 32;
    }
    else if (dir == 2)
    {
+      columna = -1;
       animacion(1, deltaTime, false, 0, 5);
 
       destino = abs(pos) - 32;
@@ -260,14 +287,14 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
    else if (dir == 3)
    {
       animacion(0, deltaTime, true, 0, 5);
-
+      fila = +1;
       destino = abs(pos) + 32;
       posJ = body->getPosition().y;
    }
    else if (dir == 4)
    {
       animacion(2, deltaTime, true, 0, 5);
-
+      fila = -1;
       destino = abs(pos) - 32;
       posJ = body->getPosition().y;
    }
@@ -292,6 +319,7 @@ void Jugador::avanzar(int dir, float deltaTime, sf::Vector2f velocity, int pos)
    //}
    if (posJ == destino)
    {
+      updateMatriz(fila, columna);
       Enpaso = false;
       //std::cout << "Enpaso:" << Enpaso << std::endl;
    }
@@ -307,4 +335,34 @@ int Jugador::getPosy()
 int Jugador::getUltimaTecla()
 {
    return ultimaTecla;
+}
+void Jugador::updateMatriz(int fila, int columna)
+{
+   int **matriz = Escenario::getInstance()->getMatriz();
+
+   matriz[(int)lastCasilla.y][(int)lastCasilla.x] = 1;
+   matriz[(int)lastCasilla.y + fila][(int)lastCasilla.x + columna] = 6;
+   lastCasilla.x += columna;
+   lastCasilla.y += fila;
+
+   for (int i = 0; i < 20; i++)
+   {
+      std::cout << "" << std::endl;
+      for (int j = 0; j < 20; j++)
+      {
+         std::cout << matriz[i][j] << "  " << std::ends;
+      }
+   }
+}
+void Jugador::engolpe()
+{
+   if (vida = 0)
+   {
+      std::cout << "MUERTE Y DESTRUCCION" << std::endl;
+   }
+   else
+   {
+      Engolpe = true;
+      dieClock.restart();
+   }
 }

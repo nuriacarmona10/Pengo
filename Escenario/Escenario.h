@@ -14,15 +14,17 @@ private:
     std::vector<Enemigo *> enemigos;
     int **matriz;
     static Escenario *instance;
+    std::vector<Enemigo *>::const_iterator it_enemy;
 
 public:
+    
     static Escenario *getInstance();
     void crearMatriz();
     void update(float deltaTime);
     void draw(sf::RenderWindow &window, float percentTick);
     ~Escenario();
     void checkColisions(float timeElapsed);
-    int** getMatriz();
+    int **getMatriz();
 };
 
 #endif
