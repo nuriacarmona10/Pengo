@@ -31,6 +31,7 @@ public:
     void Update(float deltaTime);
     void Draw(sf::RenderWindow &window, float percentTick);
     void updateMatriz(int fila,int colum);
+   
 };
 
 #endif

@@ -9,6 +9,7 @@ Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy)
 {
     body = bodys;
     body.setPosition(posx, posy);
+    body.setTextureRect(sf::IntRect(2*32,0,32,32));
     tiempoTotal = 0.0f;
     direccion = 3;
     Enpaso = false;
@@ -167,10 +168,19 @@ bool Enemigo::checkColisions(int dir)
     std::cout << "destino.y" << casillay << std::endl;
     std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
 
-    if (matriz[casillay][casillax] == 6)
+   /* if (matriz[casillay][casillax] == 6)
     {   
         std::cout<<casillay<<" : "<< casillax << std::endl;
         player->engolpe();
+        return true;
+    }*/
+    if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo()){
+        std::cout<<casillay<<" : "<< casillax << std::endl;
+        player->engolpe();
+        if(dir==1 || dir==3)
+            direccion=2;
+        else if(dir==2 || dir==4)
+            direccion=1;
         return true;
     }
     else if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
@@ -272,10 +282,10 @@ void Enemigo::updateMatriz(int fila, int columna)
 
     for (int i = 0; i < 20; i++)
     {
-        std::cout << "" << std::endl;
+       // std::cout << "" << std::endl;
         for (int j = 0; j < 20; j++)
         {
-            std::cout << matriz[i][j] << "  " << std::ends;
+          //  std::cout << matriz[i][j] << "  " << std::ends;
         }
     }
 }

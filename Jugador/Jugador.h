@@ -17,14 +17,18 @@ public:
     int getPosx();
     int getPosy();
     int getUltimaTecla();
-    void updateMatriz(int fila,int colum);
+    void updateMatriz(int fila, int colum);
     void engolpe();
+    bool muriendo();
+    void setMuriendo(bool b);
+    void resetInstance();
 
 private:
     sf::IntRect rect;
     sf::Clock animationClock;
     sf::Clock dieClock;
     bool Enpaso;
+    bool Muriendo;
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;
@@ -41,16 +45,6 @@ private:
     sf::Vector2u currentImage;
     float totalTime;
     float switchTime;
-    enum Action
-    {
-        Idle,
-        Punching,
-        Shooting,
-        Changing,
-        Dying,
-        Hit
-    };
-    Action accion;
 };
 
 #endif

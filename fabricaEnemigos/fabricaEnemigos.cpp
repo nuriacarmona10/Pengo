@@ -30,3 +30,4 @@ Enemigo* fabricaEnemigos::crearEnemigo(int posx,int posy)
     
     return new Enemigo(body,posx,posy);
 }
+

@@ -20,7 +20,8 @@ Jugador::Jugador(/* args */)
    posTecla.y = 0;
    lastCasilla.x = 10;
    lastCasilla.y = 10;
-   vida = 3;
+   vida = 2;
+   Muriendo = false;
 }
 Jugador::~Jugador()
 {
@@ -66,6 +67,12 @@ void Jugador::update(float deltaTime)
          velocity.y = -kVel;
          avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
       }
+   }
+   else if (Muriendo)
+   {
+      animacion(9, deltaTime, true, 0, 11);
+      //dieClock.restart();
+      muriendo();
    }
 
    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -133,13 +140,15 @@ void Jugador::update(float deltaTime)
          animacion(10, deltaTime, true, 0, 7);
       }
    }
-   if (Engolpe)
+   
+   if (Engolpe && !Muriendo)
    {
       animacion(6, deltaTime, true, 0, 2);
-      if (dieClock.getElapsedTime().asSeconds() == 2)
-      {
-         Engolpe = false;
-      }
+
+      //std::cout<<"TIEMPECITO"<<time<< std::endl;
+
+      vida--;
+      Engolpe = false;
    }
 
    // body->move((velocity * deltaTime));
@@ -347,22 +356,50 @@ void Jugador::updateMatriz(int fila, int columna)
 
    for (int i = 0; i < 20; i++)
    {
-      std::cout << "" << std::endl;
+      //  std::cout << "" << std::endl;
       for (int j = 0; j < 20; j++)
       {
-         std::cout << matriz[i][j] << "  " << std::ends;
+         // std::cout << matriz[i][j] << "  " << std::ends;
       }
    }
 }
 void Jugador::engolpe()
 {
-   if (vida = 0)
+
+   Engolpe=true
+   /*if (vida == 0)
    {
+      if(!Muriendo){
+      Muriendo = true;
+      dieClock.restart();
+      vida--;
+      }
       std::cout << "MUERTE Y DESTRUCCION" << std::endl;
    }
    else
    {
-      Engolpe = true;
-      dieClock.restart();
+      Engolpe=true;
+   }*/
+}
+bool Jugador::muriendo()
+{
+   int time = dieClock.getElapsedTime().asSeconds();
+   std::cout << "tiempecito" << time << std::endl;
+   if (Muriendo && time>=2)
+   {
+      return true;
    }
+   else
+   {
+      return false;
+   }
+}
+void Jugador::setMuriendo(bool b)
+{
+   Muriendo = false;
+}
+void Jugador::resetInstance()
+{
+   delete instance;
+   instance = NULL;
 }

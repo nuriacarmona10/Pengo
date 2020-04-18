@@ -7,8 +7,6 @@
 #include "Jugador/Jugador.h"
 #include "fabricaEnemigos/fabricaEnemigos.h"
 
-
-
 #define UPDATE_TICK_TIME 1000 / 17
 
 int main()
@@ -30,31 +28,38 @@ int main()
   //Bucle del juego
   while (window.isOpen())
   {
-    
 
-    float percentTick = std::min(1.f, (float)updateClock.getElapsedTime().asSeconds() * 1000 / 66.67f);
-    //Bucle de obtención de eventos
-    sf::Event event;
-    window.clear();
-    if (updateClock.getElapsedTime().asMilliseconds() > UPDATE_TICK_TIME)
-    {
-      float timeElapsed = updateClock.restart().asSeconds();
-      Escenario::getInstance()->update(timeElapsed);
-    }
-    Escenario::getInstance()->draw(window, percentTick);
-    Jugador::getInstance()->draw(window,percentTick);
+    //Escenario::getInstance()->resetInstance();
+   // Escenario::getInstance()->resetEnemigos();
+    Jugador::getInstance()->resetInstance();
+    Escenario::getInstance()->setVida();  // esto lo hace siempre que el jugador muere 
 
-    window.display();
-    while (window.pollEvent(event))
+    while (!Jugador::getInstance()->muriendo())
     {
-      
-      switch (event.type)
+      float percentTick = std::min(1.f, (float)updateClock.getElapsedTime().asSeconds() * 1000 / 66.67f);
+      //Bucle de obtención de eventos
+      sf::Event event;
+      window.clear();
+      if (updateClock.getElapsedTime().asMilliseconds() > UPDATE_TICK_TIME)
+      {
+        float timeElapsed = updateClock.restart().asSeconds();
+        Escenario::getInstance()->update(timeElapsed);
+      }
+      Escenario::getInstance()->draw(window, percentTick);
+      Jugador::getInstance()->draw(window, percentTick);
+
+      window.display();
+      while (window.pollEvent(event))
       {
 
-      //Si se recibe el evento de cerrar la ventana la cierro
-      case sf::Event::Closed:
-        window.close();
-        break;
+        switch (event.type)
+        {
+
+        //Si se recibe el evento de cerrar la ventana la cierro
+        case sf::Event::Closed:
+          window.close();
+          break;
+        }
       }
     }
   }

@@ -21,10 +21,10 @@ Escenario::Escenario(/* args */)
     }
     body->setTexture(*tex);
     crearMatriz();
-
-    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(96, 96));
-    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(544, 320));
-    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(480, 64));
+    vida=2;
+    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(96, 96));  
+    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(544, 320)); 
+    enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(480, 64)); // arriba a la derecha 
 }
 
 Escenario::~Escenario()
@@ -90,6 +90,7 @@ void Escenario::crearMatriz()
     for (int i = 0; i < filas; i++)
     {
         matriz[i] = new int[columnas];
+        
     }
     for (int i = 0; i < filas; i++)
     {
@@ -118,12 +119,12 @@ void Escenario::crearMatriz()
     }
     // aquí saldrán los Snow-Bee
     matriz[3][3] = 4;
-    matriz[17][10] = 4;
-    matriz[15][17] = 4;
+    matriz[10][17] = 4;
+    matriz[2][15] = 4;
     //Aquí saldrán las gemas
     matriz[4][32] = 5;
     matriz[8][15] = 5;
-    matriz[15][2] = 5;
+    matriz[15][6] = 5;
     //aqui el zelda
     matriz[10][10] = 6; // 10*32=320; 11*32=352
 }
@@ -138,4 +139,29 @@ Escenario *Escenario::getInstance()
 int **Escenario::getMatriz()
 {
     return matriz;
+}
+void Escenario::resetInstance()
+{
+    delete instance;
+    instance = NULL;
+}
+void Escenario::resetEnemigos()
+{
+    int cont = 0;
+    for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
+    {
+        enemigos[cont] = NULL;
+        enemigos.erase(enemigos.begin());
+        delete enemigos[cont];
+        cont++;
+    }
+}
+void Escenario::setVida() {
+    if(vida==0)
+        resetInstance();
+    else
+    {
+        vida--;
+    }
+    
 }
