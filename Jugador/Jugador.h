@@ -18,7 +18,9 @@ public:
     int getPosy();
     int getUltimaTecla();
     void updateMatriz(int fila, int colum);
-    void engolpe();
+    bool engolpe();
+    bool getEngolpe();
+    void setEngolpe(bool b);
     bool muriendo();
     void setMuriendo(bool b);
     void resetInstance();
@@ -27,6 +29,7 @@ private:
     sf::IntRect rect;
     sf::Clock animationClock;
     sf::Clock dieClock;
+    sf::Clock engolpeClock;
     bool Enpaso;
     bool Muriendo;
     sf::Vector2f lastCasilla;

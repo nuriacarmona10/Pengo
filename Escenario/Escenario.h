@@ -11,10 +11,12 @@ private:
     sf::Sprite *body;
     sf::Texture *tex;
     Escenario();
+    sf::Clock gameoverClock;
     std::vector<Enemigo *> enemigos;
     int **matriz;
     static Escenario *instance;
     int vida;
+    bool gameover;
     std::vector<Enemigo *>::const_iterator it_enemy;
     //int **matrizVieja();
 

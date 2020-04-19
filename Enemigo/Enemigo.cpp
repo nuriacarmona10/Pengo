@@ -175,8 +175,9 @@ bool Enemigo::checkColisions(int dir)
         return true;
     }*/
     if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo()){
-        std::cout<<casillay<<" : "<< casillax << std::endl;
-        player->engolpe();
+       if(!player->getEngolpe()) 
+        player->setEngolpe(true);
+        
         if(dir==1 || dir==3)
             direccion=2;
         else if(dir==2 || dir==4)

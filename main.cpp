@@ -16,6 +16,10 @@ int main()
 
   //Creamos una ventana
   sf::RenderWindow window(sf::VideoMode(640, 640), "P0. Fundamentos de los Videojuegos. DCCIA");
+  sf::Vector2i p;
+  p.x = 700;
+  p.y = 200;
+  window.setPosition(p);
 
   //Le pongo el centroide donde corresponde
   // sprite.setOrigin(75 / 2, 75 / 2);
@@ -25,16 +29,22 @@ int main()
   // Lo dispongo en el centro de la pantalla
 
   window.setFramerateLimit(60);
+  int cont = 0;
   //Bucle del juego
   while (window.isOpen())
   {
 
     //Escenario::getInstance()->resetInstance();
-   // Escenario::getInstance()->resetEnemigos();
-    Jugador::getInstance()->resetInstance();
-    Escenario::getInstance()->setVida();  // esto lo hace siempre que el jugador muere 
+    // Escenario::getInstance()->resetEnemigos();
 
-    while (!Jugador::getInstance()->muriendo())
+    if (cont != 0)
+    {
+      Jugador::getInstance()->resetInstance();
+      Escenario::getInstance()->setVida(); // esto lo hace siempre que el jugador muere
+    }
+    cont ++;
+
+    while (!Jugador::getInstance()->engolpe())
     {
       float percentTick = std::min(1.f, (float)updateClock.getElapsedTime().asSeconds() * 1000 / 66.67f);
       //Bucle de obtención de eventos
@@ -46,7 +56,7 @@ int main()
         Escenario::getInstance()->update(timeElapsed);
       }
       Escenario::getInstance()->draw(window, percentTick);
-      Jugador::getInstance()->draw(window, percentTick);
+      //Jugador::getInstance()->draw(window, percentTick);
 
       window.display();
       while (window.pollEvent(event))

@@ -1,6 +1,6 @@
 #include "Jugador.h"
 #include "iostream"
-#define kVel 4;
+#define kVel 8;
 
 Jugador *Jugador::instance = 0;
 
@@ -140,15 +140,15 @@ void Jugador::update(float deltaTime)
          animacion(10, deltaTime, true, 0, 7);
       }
    }
-   
+
    if (Engolpe && !Muriendo)
    {
       animacion(6, deltaTime, true, 0, 2);
-
+      //engolpeClock.restart();
       //std::cout<<"TIEMPECITO"<<time<< std::endl;
-
+      engolpe();
       vida--;
-      Engolpe = false;
+      
    }
 
    // body->move((velocity * deltaTime));
@@ -363,10 +363,19 @@ void Jugador::updateMatriz(int fila, int columna)
       }
    }
 }
-void Jugador::engolpe()
+bool Jugador::engolpe()
 {
+   int time = engolpeClock.getElapsedTime().asSeconds();
+   //   std::cout << "TIEMPECITO" <<time <<std::endl;
 
-   Engolpe=true
+   if (Engolpe && time >= 2)
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
    /*if (vida == 0)
    {
       if(!Muriendo){
@@ -384,8 +393,8 @@ void Jugador::engolpe()
 bool Jugador::muriendo()
 {
    int time = dieClock.getElapsedTime().asSeconds();
-   std::cout << "tiempecito" << time << std::endl;
-   if (Muriendo && time>=2)
+   // std::cout << "tiempecito" << time << std::endl;
+   if (Muriendo && time >= 2)
    {
       return true;
    }
@@ -402,4 +411,12 @@ void Jugador::resetInstance()
 {
    delete instance;
    instance = NULL;
+}
+void Jugador::setEngolpe(bool b)
+{
+   engolpeClock.restart();
+   Engolpe = b;
+}
+bool Jugador::getEngolpe(){
+   return Engolpe;
 }
