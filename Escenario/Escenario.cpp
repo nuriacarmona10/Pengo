@@ -77,14 +77,15 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
             //std::cout << std::endl;
         }
 
-        Jugador::getInstance()->draw(window, percentTick);
         int cont = 0;
         for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
         {
-            enemigos[cont]->Draw(window, percentTick);
+            if (enemigos[cont])
+                enemigos[cont]->Draw(window, percentTick);
 
             cont++;
         }
+        Jugador::getInstance()->draw(window, percentTick);
     }
     else
     {
@@ -160,18 +161,21 @@ void Escenario::resetEnemigos(int fila, int columna)
 {
 
     int cont = 0;
-    
+    std::vector<Enemigo *>::const_iterator it{};
     for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
     {
-        int rangox= abs(columna*32-enemigos[cont]->getColumna()*32) ;
-        int rangoy= abs(fila*32-enemigos[cont]->getFila()*32) ;
-        
-        if(enemigos[cont]->getColumna()==columna && enemigos[cont]->getFila() || ( rangox<=15 && rangoy<=15 )  ) {
-        delete enemigos[cont];
-        enemigos.erase(enemigos.begin());
-        cont++;
+        std::cout << "Enemigo Fila:  " << enemigos[cont]->getFila() << "  Enemigo Columna:  " << enemigos[cont]->getColumna() << std::endl;
+
+        if (enemigos[cont]->getColumna() == columna && enemigos[cont]->getFila())
+        {
+            delete enemigos[cont];
+            enemigos[cont] = enemigos.back();
+            break;
         }
+        cont++;
     }
+
+    enemigos.pop_back();
 }
 void Escenario::setVida()
 {
