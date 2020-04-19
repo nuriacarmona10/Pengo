@@ -156,15 +156,21 @@ void Escenario::resetInstance()
     delete instance;
     instance = NULL;
 }
-void Escenario::resetEnemigos()
+void Escenario::resetEnemigos(int fila, int columna)
 {
+
     int cont = 0;
+    
     for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
     {
-        enemigos[cont] = NULL;
-        enemigos.erase(enemigos.begin());
+        int rangox= abs(columna*32-enemigos[cont]->getColumna()*32) ;
+        int rangoy= abs(fila*32-enemigos[cont]->getFila()*32) ;
+        
+        if(enemigos[cont]->getColumna()==columna && enemigos[cont]->getFila() || ( rangox<=15 && rangoy<=15 )  ) {
         delete enemigos[cont];
+        enemigos.erase(enemigos.begin());
         cont++;
+        }
     }
 }
 void Escenario::setVida()
@@ -172,12 +178,12 @@ void Escenario::setVida()
     if (vida == 0)
     {
         tex->loadFromFile("resources/go.jpg");
-        
+
         body->setTexture(*tex);
-        body->setPosition(220,300);
-        body->setOrigin(220,180);
-        body->setTextureRect(sf::IntRect(0,0,640,361));
-        std::cout<<"VIDAS: "<< vida <<std::endl;
+        body->setPosition(220, 300);
+        body->setOrigin(220, 180);
+        body->setTextureRect(sf::IntRect(0, 0, 640, 361));
+        std::cout << "VIDAS: " << vida << std::endl;
         gameover = true;
         gameoverClock.restart();
     }

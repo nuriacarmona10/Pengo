@@ -23,6 +23,7 @@ private:
 public:
     int getColumna();
     int getFila();
+    
     void avanzar(int n, float deltaTime);
     bool checkColisions(int dir);
     void animacion(int row, float deltaTime, bool faceRight, int startFrame, int endFrame);

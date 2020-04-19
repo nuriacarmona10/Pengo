@@ -32,7 +32,7 @@ public:
     void checkColisions(float timeElapsed);
     int **getMatriz();
     void resetInstance();
-    void resetEnemigos();
+    void resetEnemigos(int f, int c);
 };
 
 #endif

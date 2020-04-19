@@ -13,6 +13,7 @@ public:
     void animacion(int row, float deltaTime, bool faceRight, int startFrame, int endFrame);
     void avanzar(int n, float deltaTime, sf::Vector2f velocity, int pos);
     bool checkColisions();
+    bool checkColisionBlock();
     //getters and setters
     int getPosx();
     int getPosy();
@@ -24,14 +25,17 @@ public:
     bool muriendo();
     void setMuriendo(bool b);
     void resetInstance();
+    void moveBlock();
 
 private:
     sf::IntRect rect;
     sf::Clock animationClock;
     sf::Clock dieClock;
     sf::Clock engolpeClock;
+    sf::Vector2i casillaViejaBlock;
     bool Enpaso;
     bool Muriendo;
+    bool MovingBlock;
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;

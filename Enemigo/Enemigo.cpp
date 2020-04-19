@@ -174,7 +174,13 @@ bool Enemigo::checkColisions(int dir)
         player->engolpe();
         return true;
     }*/
-    if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo()){
+     if (matriz[casillay][casillax] == 6)
+    {   
+        std::cout<<casillay<<" : "<< casillax << std::endl;
+        player->engolpe();
+        return true;
+    }
+    /*if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo()){
        if(!player->getEngolpe()) 
         player->setEngolpe(true);
         
@@ -183,7 +189,7 @@ bool Enemigo::checkColisions(int dir)
         else if(dir==2 || dir==4)
             direccion=1;
         return true;
-    }
+    }*/
     else if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
     {
         // std::cout << " colision" <<  std::endl;

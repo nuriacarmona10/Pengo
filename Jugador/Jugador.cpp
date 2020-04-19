@@ -22,6 +22,7 @@ Jugador::Jugador(/* args */)
    lastCasilla.y = 10;
    vida = 2;
    Muriendo = false;
+   MovingBlock = false;
 }
 Jugador::~Jugador()
 {
@@ -116,6 +117,13 @@ void Jugador::update(float deltaTime)
          avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
       }
    }
+   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+   {
+      if (checkColisionBlock())
+      {
+         // std::cout << "ha roto el bloque" << std::endl;
+      }
+   }
 
    else if (velocity.x == 0.0 && velocity.y == 0.0)
    {
@@ -148,7 +156,10 @@ void Jugador::update(float deltaTime)
       //std::cout<<"TIEMPECITO"<<time<< std::endl;
       engolpe();
       vida--;
-      
+   }
+   if (MovingBlock)
+   {
+      moveBlock();
    }
 
    // body->move((velocity * deltaTime));
@@ -354,14 +365,14 @@ void Jugador::updateMatriz(int fila, int columna)
    lastCasilla.x += columna;
    lastCasilla.y += fila;
 
-   for (int i = 0; i < 20; i++)
+   /*for (int i = 0; i < 20; i++)
    {
       //  std::cout << "" << std::endl;
       for (int j = 0; j < 20; j++)
       {
          // std::cout << matriz[i][j] << "  " << std::ends;
       }
-   }
+   }*/
 }
 bool Jugador::engolpe()
 {
@@ -390,6 +401,84 @@ bool Jugador::engolpe()
       Engolpe=true;
    }*/
 }
+bool Jugador::checkColisionBlock()
+{
+   int **matriz = Escenario::getInstance()->getMatriz();
+   Jugador *player = Jugador::getInstance();
+   sf::Vector2f destino;
+   int playerx = player->getPosx(); // columna en la que esta
+   int playery = player->getPosy(); // fila en la que esta
+   destino.x = playerx;
+   destino.y = playery;
+   sf::Vector2f siguiente;
+   siguiente.x = playerx;
+   siguiente.y = playery;
+
+   if (player->getUltimaTecla() == 1)
+   {
+      destino.x = playerx + 1;
+      siguiente.x = playerx + 2;
+   }
+   else if (player->getUltimaTecla() == 2)
+   {
+      destino.x = playerx - 1;
+      siguiente.x = playerx - 2;
+   }
+   else if (player->getUltimaTecla() == 3)
+   {
+      destino.y = playery + 1;
+      siguiente.y = playery + 2;
+   }
+   else if (player->getUltimaTecla() == 4)
+   {
+      destino.y = playery - 1;
+      siguiente.y = playery - 2;
+   }
+   int casillay = destino.y;
+   int casillax = destino.x;
+   int siguientex = siguiente.x;
+   int siguientey = siguiente.y;
+
+   /* std::cout << "player.x" << playerx << std::endl;
+   std::cout << "player.y" << playery << std::endl;
+   std::cout << "destino.x" << casillax << std::endl;
+   std::cout << "destino.y" << casillay << std::endl;
+   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
+
+   if (matriz[casillay][casillax] == 2)
+   {
+      // std::cout << "Fila que quiere:  " << casillay << "  Columna que quiere: " << casillax << std::endl;
+      // std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;
+
+      if (matriz[siguientey][siguientex] == 2 || matriz[siguientey][siguientex] == 5 || matriz[siguientey][siguientex] == 0)
+      {
+
+         matriz[casillay][casillax] = 1; // aqui lo rompo
+      }
+      else if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
+      { // aqui lo muevo una vez y de ahi llamo a la funcion moveBlock que la llama el update
+         MovingBlock = true;
+         matriz[casillay][casillax] = 1;
+         matriz[siguientey][siguientex] = 2;
+         casillaViejaBlock.x = siguientex;
+         casillaViejaBlock.y = siguientey;
+      }
+      else if (matriz[siguientey][siguientex] == 4)
+      { // aqui me encuentro a un enemigo
+         std::cout << "Entra a matar enemigo" << std::endl;
+         Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+         matriz[siguientey][siguientex] = 2;
+         matriz[casillay][casillax] = 1;
+      }
+
+      return true;
+   }
+
+   else
+   {
+      return false;
+   }
+}
 bool Jugador::muriendo()
 {
    int time = dieClock.getElapsedTime().asSeconds();
@@ -417,6 +506,51 @@ void Jugador::setEngolpe(bool b)
    engolpeClock.restart();
    Engolpe = b;
 }
-bool Jugador::getEngolpe(){
+bool Jugador::getEngolpe()
+{
    return Engolpe;
+}
+void Jugador::moveBlock()
+{
+
+   int **matriz = Escenario::getInstance()->getMatriz();
+   int siguientex = casillaViejaBlock.x;
+   int siguientey = casillaViejaBlock.y;
+   if (ultimaTecla == 1)
+   {
+      siguientex += 1;
+   }
+   else if (ultimaTecla == 2)
+   {
+      siguientex -= 1;
+   }
+   else if (ultimaTecla == 3)
+   {
+      siguientey += 1;
+   }
+   else if (ultimaTecla == 4)
+   {
+      siguientey -= 1;
+   }
+
+   std::cout << " Fila CasillaVieja :  " << casillaViejaBlock.y << "  Columna casillaVieja: " << casillaViejaBlock.x << std::endl;
+   std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;
+   if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
+   {
+      matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+      matriz[siguientey][siguientex] = 2;
+      casillaViejaBlock.x = siguientex;
+      casillaViejaBlock.y = siguientey;
+   }
+   else if (matriz[siguientey][siguientex] == 4)
+   {
+      std::cout << "Entra a matar enemigo" << std::endl;
+      Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+      matriz[siguientey][siguientex] = 2;
+      matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+   }
+   else
+   {
+      MovingBlock = false;
+   }
 }
