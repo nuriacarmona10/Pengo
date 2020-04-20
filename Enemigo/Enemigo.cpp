@@ -175,7 +175,7 @@ bool Enemigo::checkColisions(int dir)
         return true;
     }*/
     
-    if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo()){
+    if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo() && !player->getModoDios()){
        if(!player->getEngolpe()) 
         player->setEngolpe(true);
         

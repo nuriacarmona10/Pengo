@@ -10,6 +10,8 @@ Escenario *Escenario::instance = 0;
 
 Escenario::Escenario(/* args */)
 {
+    contEnemys = 0;
+    contEnemysNews = 0;
     matriz = new int *[filas];
     body = new sf::Sprite;
     tex = new sf::Texture;
@@ -26,6 +28,7 @@ Escenario::Escenario(/* args */)
     enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(544, 320));
     enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(480, 64)); // arriba a la derecha
     gameover = false;
+    win = false;
 }
 
 Escenario::~Escenario()
@@ -47,7 +50,7 @@ void Escenario::update(float timeElapsed)
 
 void Escenario::draw(sf::RenderWindow &window, float percentTick)
 {
-    if (!gameover)
+    if (!gameover && !win)
     {
         for (int i = 0; i < filas; i++)
         {
@@ -87,13 +90,22 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
         }
         Jugador::getInstance()->draw(window, percentTick);
     }
-    else
+    else if (gameover)
     {
 
         window.draw(*body);
         int time = gameoverClock.getElapsedTime().asSeconds();
         if (time > 2)
             resetInstance();
+    }
+    else if (win)
+    {
+        tex->loadFromFile("resources/win.png");
+        body->setTexture(*tex);
+        body->setPosition(220, 220);
+        body->setOrigin(220, 220);
+        body->setTextureRect(sf::IntRect(0, 0, 640, 640));
+        window.draw(*body);
     }
 }
 void Escenario::crearMatriz()
@@ -161,21 +173,32 @@ void Escenario::resetEnemigos(int fila, int columna)
 {
 
     int cont = 0;
+    contEnemys++;
     std::vector<Enemigo *>::const_iterator it{};
     for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
     {
-        std::cout << "Enemigo Fila:  " << enemigos[cont]->getFila() << "  Enemigo Columna:  " << enemigos[cont]->getColumna() << std::endl;
+       // std::cout << "Enemigo Fila:  " << enemigos[cont]->getFila() << "  Enemigo Columna:  " << enemigos[cont]->getColumna() << std::endl;
 
         if (enemigos[cont]->getColumna() == columna && enemigos[cont]->getFila())
         {
+
             delete enemigos[cont];
             enemigos[cont] = enemigos.back();
+            contEnemysNews++;
+
             break;
         }
         cont++;
     }
 
     enemigos.pop_back();
+    if (contEnemysNews < 3)
+        enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(256, 320)); // [8][10]
+    if (contEnemys == 5)
+    {
+        std::cout << "Cuenta Enemigos Muertos: " << contEnemys << std::endl;
+        win = true;
+    }
 }
 void Escenario::setVida()
 {

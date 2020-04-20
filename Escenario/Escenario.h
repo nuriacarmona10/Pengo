@@ -17,6 +17,9 @@ private:
     static Escenario *instance;
     int vida;
     bool gameover;
+    bool win;
+    int contEnemys;
+    int contEnemysNews;
     std::vector<Enemigo *>::const_iterator it_enemy;
     //int **matrizVieja();
 

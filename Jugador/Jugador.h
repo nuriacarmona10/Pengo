@@ -26,16 +26,20 @@ public:
     void setMuriendo(bool b);
     void resetInstance();
     void moveBlock();
+    bool getModoDios();
 
 private:
     sf::IntRect rect;
     sf::Clock animationClock;
     sf::Clock dieClock;
     sf::Clock engolpeClock;
+    sf::Clock PressGCLock;
+
     sf::Vector2i casillaViejaBlock;
     bool Enpaso;
     bool Muriendo;
     bool MovingBlock;
+    bool modoDios;
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;

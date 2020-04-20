@@ -23,6 +23,7 @@ Jugador::Jugador(/* args */)
    vida = 2;
    Muriendo = false;
    MovingBlock = false;
+   modoDios = false;
 }
 Jugador::~Jugador()
 {
@@ -38,7 +39,7 @@ Jugador *Jugador::getInstance()
 
 void Jugador::update(float deltaTime)
 {
-
+  
    velocity.x = 0;
    velocity.y = 0;
    prevPos.x = body->getPosition().x;
@@ -117,11 +118,25 @@ void Jugador::update(float deltaTime)
          avanzar(ultimaTecla, deltaTime, velocity, posTecla.y);
       }
    }
-   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
    {
       if (checkColisionBlock())
       {
          // std::cout << "ha roto el bloque" << std::endl;
+      }
+   }
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+   {
+      if (modoDios && PressGCLock.getElapsedTime().asSeconds()>=0.5)
+      {
+         std::cout << "Modo Dios Desactivado" << std::endl;
+         modoDios = false;
+      }
+      else
+      {
+         std::cout << "Modo Dios Activado" << std::endl;
+
+         modoDios = true;
       }
    }
 
@@ -465,7 +480,7 @@ bool Jugador::checkColisionBlock()
       }
       else if (matriz[siguientey][siguientex] == 4)
       { // aqui me encuentro a un enemigo
-         std::cout << "Entra a matar enemigo" << std::endl;
+         // std::cout << "Entra a matar enemigo" << std::endl;
          Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
          matriz[siguientey][siguientex] = 2;
          matriz[casillay][casillax] = 1;
@@ -510,6 +525,10 @@ bool Jugador::getEngolpe()
 {
    return Engolpe;
 }
+bool Jugador::getModoDios()
+{
+   return modoDios;
+}
 void Jugador::moveBlock()
 {
 
@@ -533,8 +552,8 @@ void Jugador::moveBlock()
       siguientey -= 1;
    }
 
-   std::cout << " Fila CasillaVieja :  " << casillaViejaBlock.y << "  Columna casillaVieja: " << casillaViejaBlock.x << std::endl;
-   std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;
+   /*std::cout << " Fila CasillaVieja :  " << casillaViejaBlock.y << "  Columna casillaVieja: " << casillaViejaBlock.x << std::endl;
+   std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;*/
    if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
    {
       matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
@@ -544,7 +563,7 @@ void Jugador::moveBlock()
    }
    else if (matriz[siguientey][siguientex] == 4)
    {
-      std::cout << "Entra a matar enemigo" << std::endl;
+      //std::cout << "Entra a matar enemigo" << std::endl;
       Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
       matriz[siguientey][siguientex] = 2;
       matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
