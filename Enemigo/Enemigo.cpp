@@ -9,7 +9,7 @@ Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy)
 {
     body = bodys;
     body.setPosition(posx, posy);
-    body.setTextureRect(sf::IntRect(2*32,0,32,32));
+    body.setTextureRect(sf::IntRect(2 * 32, 0, 32, 32));
     tiempoTotal = 0.0f;
     direccion = 3;
     Enpaso = false;
@@ -17,6 +17,7 @@ Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy)
     posTecla.y = posy;
     lastCasilla.x = posx / 32;
     lastCasilla.y = posy / 32;
+    MovingBlock = false;
 }
 Enemigo::~Enemigo()
 {
@@ -28,7 +29,10 @@ void Enemigo::Update(float deltaTime)
     velocity.y = 0;
     prevPos.x = body.getPosition().x;
     prevPos.y = body.getPosition().y;
-    //std::cout << "RAND:" << direccion << std::endl;
+    
+   /* std::cout << "Columna: " << getColumna() << std::endl;
+    std::cout << "Fila: " << getFila() << std::endl;*/
+
     if (Enpaso)
     {
         // std::cout << "ENTRA 1" << std::endl;
@@ -54,12 +58,14 @@ void Enemigo::Update(float deltaTime)
             avanzar(direccion, deltaTime);
         }
     }
+
     else // si ya ha terminado el paso hasta la proxima casilla
-    {    // derecha
+    {
         velocity.x = 0;
         velocity.y = 0;
 
-        if (!checkColisions(direccion))
+        if (!checkColisions(direccion)) // si no hay colision
+
         {
             animacion(3, deltaTime, true, 0, 3);
             /*if (direccion == 1 || direccion == 2) // I dont like this
@@ -69,14 +75,25 @@ void Enemigo::Update(float deltaTime)
 
             avanzar(direccion, deltaTime);
         }
+
         else
         {
 
             direccion = rand() % (4 - 1 + 1) + 1; // (max-min+1)+min  me da un numero del 1 al 4
         }
+        if (direccion == 1 || direccion == 2 || direccion == 3 || direccion == 4  )
+        {
+            checkColisionBlock();
+        }
+
+        imagenActual.x = posTecla.x;
+        imagenActual.y = posTecla.y;
     }
-    imagenActual.x = posTecla.x;
-    imagenActual.y = posTecla.y;
+    if(BrokenBlock) {
+        animacion(4,deltaTime,true,0,4);
+    }
+    BrokenBlock=false;
+
 }
 
 void Enemigo::Draw(sf::RenderWindow &window, float percentTick)
@@ -168,21 +185,22 @@ bool Enemigo::checkColisions(int dir)
     std::cout << "destino.y" << casillay << std::endl;
     std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
 
-   /* if (matriz[casillay][casillax] == 6)
+    /* if (matriz[casillay][casillax] == 6)
     {   
         std::cout<<casillay<<" : "<< casillax << std::endl;
         player->engolpe();
         return true;
     }*/
-    
-    if(abs(body.getPosition().x-player->getPosx()*32)<=20 && abs(body.getPosition().y-player->getPosy()*32)<=20 && !player->muriendo() && !player->getModoDios()){
-       if(!player->getEngolpe()) 
-        player->setEngolpe(true);
-        
-        if(dir==1 || dir==3)
-            direccion=2;
-        else if(dir==2 || dir==4)
-            direccion=1;
+
+    if (abs(body.getPosition().x - player->getPosx() * 32) <= 20 && abs(body.getPosition().y - player->getPosy() * 32) <= 20 && !player->muriendo() && !player->getModoDios())
+    {
+        if (!player->getEngolpe())
+            player->setEngolpe(true);
+
+        if (dir == 1 || dir == 3)
+            direccion = 2;
+        else if (dir == 2 || dir == 4)
+            direccion = 1;
         return true;
     }
     else if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
@@ -261,17 +279,19 @@ void Enemigo::avanzar(int dir, float deltaTime)
     if (body.getPosition().x == posTecla.x && body.getPosition().y == posTecla.y)
     {
         Enpaso = false;
-        updateMatriz(fila, columna);
+        updateMatriz(fila, columna); // fila y columna a la que va
         //std::cout << "Enpaso:" << Enpaso << std::endl;
     }
 }
 int Enemigo::getColumna()
 {
-    return body.getPosition().x / 32;
+    // std::cout << "Columna: " << abs(body.getPosition().x / 32 )<< std::endl;
+
+    return body.getPosition().x/32;
 }
 int Enemigo::getFila()
 {
-    return body.getPosition().y / 32;
+    return body.getPosition().y/32;
 }
 void Enemigo::updateMatriz(int fila, int columna)
 {
@@ -284,10 +304,77 @@ void Enemigo::updateMatriz(int fila, int columna)
 
     for (int i = 0; i < 20; i++)
     {
-       // std::cout << "" << std::endl;
+        // std::cout << "" << std::endl;
         for (int j = 0; j < 20; j++)
         {
-          //  std::cout << matriz[i][j] << "  " << std::ends;
+            //  std::cout << matriz[i][j] << "  " << std::ends;
         }
+    }
+}
+int Enemigo::getDireccion()
+{
+    return direccion;
+}
+bool Enemigo::checkColisionBlock()
+{
+    int **matriz = Escenario::getInstance()->getMatriz();
+    sf::Vector2f destino;
+    int enemyx = getColumna(); // columna en la que esta
+    int enemyy = getFila();    // fila en la que esta
+    destino.x = enemyx;
+    destino.y = enemyy;
+    sf::Vector2f siguiente;
+    siguiente.x = enemyx;
+    siguiente.y = enemyy;
+
+    if (direccion == 1)
+    {
+        destino.x = enemyx + 1;
+        siguiente.x = enemyx + 2;
+    }
+    else if (direccion == 2)
+    {
+        destino.x = enemyx - 1;
+        siguiente.x = enemyx - 2;
+    }
+    else if (direccion == 3)
+    {
+        destino.y = enemyy + 1;
+        siguiente.y = enemyy + 2;
+    }
+    else if (direccion == 4)
+    {
+        destino.y = enemyy - 1;
+        siguiente.y = enemyy - 2;
+    }
+    int casillay = destino.y;
+    int casillax = destino.x;
+    int siguientex = siguiente.x;
+    int siguientey = siguiente.y;
+
+    /* std::cout << "player.x" << enemyx << std::endl;
+   std::cout << "player.y" << enemyy << std::endl;
+   std::cout << "destino.x" << casillax << std::endl;
+   std::cout << "destino.y" << casillay << std::endl;
+   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
+
+    if (matriz[casillay][casillax] == 2)
+    {
+        // std::cout << "Fila que quiere:  " << casillay << "  Columna que quiere: " << casillax << std::endl;
+        // std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;
+
+        if (matriz[siguientey][siguientex] == 2 || matriz[siguientey][siguientex] == 5 || matriz[siguientey][siguientex] == 0)
+        {
+
+            matriz[casillay][casillax] = 7; // aqui lo rompo
+            BrokenBlock=true;
+        }
+
+        return true;
+    }
+
+    else
+    {
+        return false;
     }
 }

@@ -75,6 +75,14 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
                     body->setPosition(j * 32, i * 32);
                     window.draw(*body);
                 }
+                else if (matriz[i][j] == 7)
+                {
+
+                    body->setTextureRect(sf::IntRect(2 * 32, 3 * 32, 32, 32));
+                    body->setPosition(j * 32, i * 32);
+                    window.draw(*body);
+                }
+
                 // std::cout << matriz[i][j] << "  ";
             }
             //std::cout << std::endl;
@@ -100,12 +108,19 @@ void Escenario::draw(sf::RenderWindow &window, float percentTick)
     }
     else if (win)
     {
-        tex->loadFromFile("resources/win.png");
+        tex->loadFromFile("resources/win.jpg");
         body->setTexture(*tex);
         body->setPosition(220, 220);
         body->setOrigin(220, 220);
         body->setTextureRect(sf::IntRect(0, 0, 640, 640));
         window.draw(*body);
+        window.draw(*body);
+        int time = winClock.getElapsedTime().asSeconds();
+        if (time > 2)
+        {
+            resetInstance();
+            Jugador::getInstance()->resetInstance();
+        }
     }
 }
 void Escenario::crearMatriz()
@@ -146,7 +161,7 @@ void Escenario::crearMatriz()
     matriz[10][17] = 4;
     matriz[2][15] = 4;
     //Aquí saldrán las gemas
-    matriz[4][32] = 5;
+    matriz[4][5] = 5;
     matriz[8][15] = 5;
     matriz[15][6] = 5;
     //aqui el zelda
@@ -172,33 +187,77 @@ void Escenario::resetInstance()
 void Escenario::resetEnemigos(int fila, int columna)
 {
 
-    int cont = 0;
     contEnemys++;
+    int cont = 0;
+    int i = 0;
     std::vector<Enemigo *>::const_iterator it{};
     for (it_enemy = enemigos.begin(); it_enemy != enemigos.end(); it_enemy++) // update de enemigos
     {
-       // std::cout << "Enemigo Fila:  " << enemigos[cont]->getFila() << "  Enemigo Columna:  " << enemigos[cont]->getColumna() << std::endl;
-
-        if (enemigos[cont]->getColumna() == columna && enemigos[cont]->getFila())
+        // std::cout << "Enemigo Fila:  " << enemigos[cont]->getFila() << "  Enemigo Columna:  " << enemigos[cont]->getColumna() << std::endl;
+        int siguientex = enemigos[cont]->getColumna();
+        int siguientey = enemigos[cont]->getFila();
+        if (enemigos[cont]->getDireccion() == 1)
         {
-
-            delete enemigos[cont];
-            enemigos[cont] = enemigos.back();
-            contEnemysNews++;
-
-            break;
+            siguientex += 1;
         }
-        cont++;
+        else if (enemigos[cont]->getDireccion() == 2)
+        {
+            siguientex -= 1;
+        }
+        else if (enemigos[cont]->getDireccion() == 3)
+        {
+            siguientey += 1;
+        }
+        else if (enemigos[cont]->getDireccion() == 4)
+        {
+            siguientey -= 1;
+        }
+        if ((enemigos[cont]->getColumna() == columna && enemigos[cont]->getFila()) == fila ||
+            (enemigos[cont]->getColumna() == siguientex && enemigos[cont]->getFila() == siguientey))
+        {
+            i = cont;
+            
+            /*delete enemigos[cont];
+            it_enemy = enemigos.erase(it_enemy);
+            std::cout << "Entra a matar al enemigo" << std::endl;
+            break;*/
+        }
+        /*else
+        {
+            ++it_enemy;
+        }*/
+
+        /* delete enemigos[cont];
+            enemigos[cont] = enemigos.back();
+            contEnemysNews++; */
     }
 
-    enemigos.pop_back();
+    //en la i tengo el que quiero eliminar
+    if (enemigos[i] != enemigos.back()) // aqui compruebo que no sea el ultimo
+    {
+       std::cout<<"DIRECCION EN LA QUE VA : " <<enemigos[i]->getDireccion()<< std::endl;
+       /* delete enemigos[i];
+        enemigos[i] = enemigos.back();
+        enemigos.pop_back();
+        it_enemy=enemigos.end()-1;*/
+    }
+    else // si es el ultimo lo borro
+    {
+        enemigos.pop_back();
+    }
+
+    // ENEMIGO YA ELIMINADO
+
     if (contEnemysNews < 3)
         enemigos.push_back(fabricaEnemigos::getInstance()->crearEnemigo(256, 320)); // [8][10]
     if (contEnemys == 5)
     {
         std::cout << "Cuenta Enemigos Muertos: " << contEnemys << std::endl;
         win = true;
+        winClock.restart();
     }
+
+    cont++;
 }
 void Escenario::setVida()
 {

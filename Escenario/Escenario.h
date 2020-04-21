@@ -12,6 +12,7 @@ private:
     sf::Texture *tex;
     Escenario();
     sf::Clock gameoverClock;
+    sf::Clock winClock;
     std::vector<Enemigo *> enemigos;
     int **matriz;
     static Escenario *instance;

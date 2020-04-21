@@ -27,6 +27,8 @@ public:
     void resetInstance();
     void moveBlock();
     bool getModoDios();
+    void restartBloqueClock();
+    void rompiendoBloque();
 
 private:
     sf::IntRect rect;
@@ -34,12 +36,14 @@ private:
     sf::Clock dieClock;
     sf::Clock engolpeClock;
     sf::Clock PressGCLock;
-
+    sf::Clock BloqueCLock;
+    sf::Vector2i BloqueAromper;
     sf::Vector2i casillaViejaBlock;
     bool Enpaso;
     bool Muriendo;
     bool MovingBlock;
     bool modoDios;
+    bool BrokenBlock;
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;

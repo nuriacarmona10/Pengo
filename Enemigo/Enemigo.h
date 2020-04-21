@@ -10,7 +10,7 @@ private:
     sf::Texture *tex;
     bool muerto;
     int direccion;
-    sf::Vector2f lastCasilla;
+    sf::Vector2i lastCasilla;
     sf::Vector2f posTecla; // posicion cuando le dio a la tec
     sf::Vector2f prevPos;
     sf::Vector2f velocity;
@@ -19,10 +19,13 @@ private:
     float tiempoTotal;
     sf::Vector2u imagenActual;
     bool Enpaso;
+    bool MovingBlock;
+    bool BrokenBlock;
 
 public:
     int getColumna();
     int getFila();
+    bool checkColisionBlock();
     void avanzar(int n, float deltaTime);
     bool checkColisions(int dir);
     void animacion(int row, float deltaTime, bool faceRight, int startFrame, int endFrame);
@@ -31,6 +34,7 @@ public:
     void Update(float deltaTime);
     void Draw(sf::RenderWindow &window, float percentTick);
     void updateMatriz(int fila,int colum);
+    int getDireccion();
    
 };
 

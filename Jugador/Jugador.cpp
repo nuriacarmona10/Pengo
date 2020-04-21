@@ -24,6 +24,7 @@ Jugador::Jugador(/* args */)
    Muriendo = false;
    MovingBlock = false;
    modoDios = false;
+   BrokenBlock = false;
 }
 Jugador::~Jugador()
 {
@@ -39,7 +40,7 @@ Jugador *Jugador::getInstance()
 
 void Jugador::update(float deltaTime)
 {
-  
+
    velocity.x = 0;
    velocity.y = 0;
    prevPos.x = body->getPosition().x;
@@ -120,14 +121,13 @@ void Jugador::update(float deltaTime)
    }
    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
    {
-      if (checkColisionBlock())
-      {
-         // std::cout << "ha roto el bloque" << std::endl;
-      }
+      checkColisionBlock();
+
+      // std::cout << "ha roto el bloque" << std::endl;
    }
    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
    {
-      if (modoDios && PressGCLock.getElapsedTime().asSeconds()>=0.5)
+      if (modoDios && PressGCLock.getElapsedTime().asSeconds() >= 0.5)
       {
          std::cout << "Modo Dios Desactivado" << std::endl;
          modoDios = false;
@@ -174,7 +174,46 @@ void Jugador::update(float deltaTime)
    }
    if (MovingBlock)
    {
+      if (ultimaTecla == 1)
+      {
+         animacion(4, deltaTime, true, 0, 8);
+      }
+      else if (ultimaTecla == 2)
+      {
+         animacion(4, deltaTime, false, 0, 8);
+      }
+      else if (ultimaTecla == 3)
+      {
+         animacion(3, deltaTime, true, 0, 8);
+      }
+      else if (ultimaTecla == 4)
+      {
+         animacion(5, deltaTime, true, 0, 8);
+      }
+
       moveBlock();
+   }
+   if (BrokenBlock)
+   {
+
+      if (ultimaTecla == 1)
+      {
+         animacion(4, deltaTime, true, 0, 8);
+      }
+      else if (ultimaTecla == 2)
+      {
+         animacion(4, deltaTime, false, 0, 8);
+      }
+      else if (ultimaTecla == 3)
+      {
+         animacion(3, deltaTime, true, 0, 8);
+      }
+      else if (ultimaTecla == 4)
+      {
+         animacion(5, deltaTime, true, 0, 8);
+      }
+
+      rompiendoBloque();
    }
 
    // body->move((velocity * deltaTime));
@@ -453,7 +492,7 @@ bool Jugador::checkColisionBlock()
    int casillax = destino.x;
    int siguientex = siguiente.x;
    int siguientey = siguiente.y;
-
+   BloqueCLock.restart();
    /* std::cout << "player.x" << playerx << std::endl;
    std::cout << "player.y" << playery << std::endl;
    std::cout << "destino.x" << casillax << std::endl;
@@ -468,8 +507,13 @@ bool Jugador::checkColisionBlock()
       if (matriz[siguientey][siguientex] == 2 || matriz[siguientey][siguientex] == 5 || matriz[siguientey][siguientex] == 0)
       {
 
-         matriz[casillay][casillax] = 1; // aqui lo rompo
+         matriz[casillay][casillax] = 7; // aqui le pongo un sprite de medio roto
+         BloqueAromper.x = casillax;
+         BloqueAromper.y = casillay;
+
+         rompiendoBloque();
       }
+
       else if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
       { // aqui lo muevo una vez y de ahi llamo a la funcion moveBlock que la llama el update
          MovingBlock = true;
@@ -572,4 +616,15 @@ void Jugador::moveBlock()
    {
       MovingBlock = false;
    }
+}
+
+void Jugador::rompiendoBloque()
+{
+   int **matriz = Escenario::getInstance()->getMatriz();
+
+  /* if (time > 1)
+   {
+      matriz[BloqueAromper.x][BloqueAromper.y] = 1;
+      BrokenBlock = false;
+   }*/
 }
