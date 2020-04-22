@@ -15,7 +15,7 @@ private:
 public:
     ~fabricaEnemigos();
     static fabricaEnemigos* getInstance();
-    Enemigo* crearEnemigo(int posx, int posy);
+    Enemigo* crearEnemigo(int posx, int posy,int id);
 };
 
 #endif

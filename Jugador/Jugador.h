@@ -26,6 +26,7 @@ public:
     void setMuriendo(bool b);
     void resetInstance();
     void moveBlock();
+    void modoEnDios();
     bool getModoDios();
     void restartBloqueClock();
     void rompiendoBloque();
@@ -44,6 +45,8 @@ private:
     bool MovingBlock;
     bool modoDios;
     bool BrokenBlock;
+    bool BloqueRoto;
+
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;
     sf::Vector2f velocity;

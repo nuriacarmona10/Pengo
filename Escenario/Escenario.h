@@ -37,6 +37,8 @@ public:
     int **getMatriz();
     void resetInstance();
     void resetEnemigos(int f, int c);
+    void setGameOver(bool b);
+    void playerWin();
 };
 
 #endif

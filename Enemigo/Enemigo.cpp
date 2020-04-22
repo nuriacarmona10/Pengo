@@ -5,9 +5,10 @@
 
 #define kVel 4
 
-Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy)
+Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy,int id2)
 {
     body = bodys;
+    id=id2;
     body.setPosition(posx, posy);
     body.setTextureRect(sf::IntRect(2 * 32, 0, 32, 32));
     tiempoTotal = 0.0f;
@@ -377,4 +378,7 @@ bool Enemigo::checkColisionBlock()
     {
         return false;
     }
+}
+int Enemigo::getId(){
+    return id;
 }

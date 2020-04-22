@@ -11,6 +11,7 @@ Jugador::Jugador(/* args */)
    tex->loadFromFile("resources/Zelda32.png");
    body->setPosition(320, 320);
    body->setTexture(*tex);
+   body->setTextureRect(sf::IntRect(0 * 32, 10 * 32, 32, 32));
    switchTime = 0.2f;
    totalTime = 0.0f;
    Enpaso = false;
@@ -25,6 +26,7 @@ Jugador::Jugador(/* args */)
    MovingBlock = false;
    modoDios = false;
    BrokenBlock = false;
+   BloqueRoto = false;
 }
 Jugador::~Jugador()
 {
@@ -75,7 +77,11 @@ void Jugador::update(float deltaTime)
    {
       animacion(9, deltaTime, true, 0, 11);
       //dieClock.restart();
-      muriendo();
+      if (muriendo())
+      {
+         resetInstance();
+         Escenario::getInstance()->setGameOver(true);
+      }
    }
 
    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -127,17 +133,17 @@ void Jugador::update(float deltaTime)
    }
    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
    {
-      if (modoDios && PressGCLock.getElapsedTime().asSeconds() >= 0.5)
-      {
-         std::cout << "Modo Dios Desactivado" << std::endl;
-         modoDios = false;
-      }
-      else
-      {
-         std::cout << "Modo Dios Activado" << std::endl;
 
-         modoDios = true;
-      }
+      modoDios = true;
+   }
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+   {
+      dieClock.restart();
+      Muriendo = true;
+   }
+   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+   {
+      Escenario::getInstance()->playerWin();
    }
 
    else if (velocity.x == 0.0 && velocity.y == 0.0)
@@ -212,8 +218,20 @@ void Jugador::update(float deltaTime)
       {
          animacion(5, deltaTime, true, 0, 8);
       }
+      BrokenBlock = false;
+   }
+   if (!BloqueRoto)
+   {
+      int **matriz = Escenario::getInstance()->getMatriz();
 
-      rompiendoBloque();
+      int time = BloqueCLock.getElapsedTime().asMilliseconds();
+      std::cout << "TIEMPO BLOQUE" << time << std::endl;
+      if (time > 0.5)
+      {
+         matriz[BloqueAromper.y][BloqueAromper.x] = 1;
+
+         BloqueRoto = true;
+      }
    }
 
    // body->move((velocity * deltaTime));
@@ -421,10 +439,10 @@ void Jugador::updateMatriz(int fila, int columna)
 
    /*for (int i = 0; i < 20; i++)
    {
-      //  std::cout << "" << std::endl;
+        std::cout << "" << std::endl;
       for (int j = 0; j < 20; j++)
       {
-         // std::cout << matriz[i][j] << "  " << std::ends;
+          std::cout << matriz[i][j] << "  " << std::ends;
       }
    }*/
 }
@@ -510,7 +528,8 @@ bool Jugador::checkColisionBlock()
          matriz[casillay][casillax] = 7; // aqui le pongo un sprite de medio roto
          BloqueAromper.x = casillax;
          BloqueAromper.y = casillay;
-
+         BrokenBlock = true;
+         BloqueRoto = false;
          rompiendoBloque();
       }
 
@@ -541,8 +560,8 @@ bool Jugador::checkColisionBlock()
 bool Jugador::muriendo()
 {
    int time = dieClock.getElapsedTime().asSeconds();
-   // std::cout << "tiempecito" << time << std::endl;
-   if (Muriendo && time >= 2)
+   //std::cout << "tiempecito" << time << std::endl;
+   if (Muriendo && time >= 3)
    {
       return true;
    }
@@ -612,7 +631,7 @@ void Jugador::moveBlock()
       matriz[siguientey][siguientex] = 2;
       matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
    }
-   else
+   else if(matriz[siguientey][siguientex]==2)
    {
       MovingBlock = false;
    }
@@ -620,11 +639,10 @@ void Jugador::moveBlock()
 
 void Jugador::rompiendoBloque()
 {
-   int **matriz = Escenario::getInstance()->getMatriz();
-
-  /* if (time > 1)
-   {
-      matriz[BloqueAromper.x][BloqueAromper.y] = 1;
-      BrokenBlock = false;
-   }*/
+   BloqueCLock.restart();
+}
+void Jugador::modoEnDios()
+{
+   if (!modoDios)
+      PressGCLock.restart();
 }
