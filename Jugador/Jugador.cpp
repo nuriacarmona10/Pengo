@@ -27,6 +27,7 @@ Jugador::Jugador(/* args */)
    modoDios = false;
    BrokenBlock = false;
    BloqueRoto = false;
+   contadorcito = 0;
 }
 Jugador::~Jugador()
 {
@@ -327,11 +328,18 @@ bool Jugador::checkColisions()
    }
    int casillay = destino.y;
    int casillax = destino.x;
-   /* std::cout << "player.x" << playerx << std::endl;
-   std::cout << "player.y" << playery << std::endl;
-   std::cout << "destino.x" << casillax << std::endl;
-   std::cout << "destino.y" << casillay << std::endl;
-   std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
+
+   std::vector<Enemigo *> enemigos = Escenario::getInstance()->getVectorEnemigos();
+
+   for (int i = 0; i < enemigos.size(); i++)
+   {
+      if (abs(enemigos[i]->getColumna() * 32 - body->getPosition().x) <= 30 &&
+          abs(enemigos[i]->getFila() * 32 - body->getPosition().y) <= 30)
+      {
+         if (Engolpe == false)
+            setEngolpe(true);
+      }
+   }
 
    if (matriz[casillay][casillax] == 2 || matriz[casillay][casillax] == 0 || matriz[casillay][casillax] == 5)
    {
@@ -485,26 +493,60 @@ bool Jugador::checkColisionBlock()
    sf::Vector2f siguiente;
    siguiente.x = playerx;
    siguiente.y = playery;
+   sf::Vector2i comprobaciones;
+   sf::Vector2i comprobaciones2;
+   sf::Vector2i comprobaciones3;
+   sf::Vector2i comprobaciones4;
+   bool BloqueEjeY;
+   bool BloqueEjeX;
 
    if (player->getUltimaTecla() == 1)
    {
+      BloqueEjeX = true;
       destino.x = playerx + 1;
       siguiente.x = playerx + 2;
    }
    else if (player->getUltimaTecla() == 2)
    {
+      BloqueEjeX = true;
       destino.x = playerx - 1;
       siguiente.x = playerx - 2;
    }
    else if (player->getUltimaTecla() == 3)
    {
+      BloqueEjeY = true;
+
       destino.y = playery + 1;
       siguiente.y = playery + 2;
    }
    else if (player->getUltimaTecla() == 4)
    {
+      BloqueEjeY = true;
+
       destino.y = playery - 1;
       siguiente.y = playery - 2;
+   }
+   if (BloqueEjeX)
+   {
+      comprobaciones.x = siguiente.x;
+      comprobaciones.y = siguiente.y + 1;
+      comprobaciones2.x = siguiente.x;
+      comprobaciones2.y = siguiente.y - 1;
+      comprobaciones3.x = siguiente.x;
+      comprobaciones3.y = siguiente.y - 2;
+      comprobaciones4.x = siguiente.x;
+      comprobaciones4.y = siguiente.y + 2;
+   }
+   if (BloqueEjeY)
+   {
+      comprobaciones.x = siguiente.x - 1;
+      comprobaciones.y = siguiente.y;
+      comprobaciones2.x = siguiente.x + 1;
+      comprobaciones2.y = siguiente.y;
+      comprobaciones3.x = siguiente.x - 2;
+      comprobaciones3.y = siguiente.y;
+      comprobaciones4.x = siguiente.x + 2;
+      comprobaciones4.y = siguiente.y;
    }
    int casillay = destino.y;
    int casillax = destino.x;
@@ -517,17 +559,18 @@ bool Jugador::checkColisionBlock()
    std::cout << "destino.y" << casillay << std::endl;
    std::cout << "matriz colision" << matriz[casillay][casillax] << std::endl;*/
 
-   if (matriz[casillay][casillax] == 2)
+   if (matriz[casillay][casillax] == 2) // hay bloque
    {
       // std::cout << "Fila que quiere:  " << casillay << "  Columna que quiere: " << casillax << std::endl;
       // std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;
 
-      if (matriz[siguientey][siguientex] == 2 || matriz[siguientey][siguientex] == 5 || matriz[siguientey][siguientex] == 0)
+      if (matriz[casillay][casillax] == 4 || matriz[siguientey][siguientex] == 2 || matriz[siguientey][siguientex] == 5 || matriz[siguientey][siguientex] == 0)
       {
 
          matriz[casillay][casillax] = 7; // aqui le pongo un sprite de medio roto
          BloqueAromper.x = casillax;
          BloqueAromper.y = casillay;
+
          BrokenBlock = true;
          BloqueRoto = false;
          rompiendoBloque();
@@ -541,16 +584,54 @@ bool Jugador::checkColisionBlock()
          casillaViejaBlock.x = siguientex;
          casillaViejaBlock.y = siguientey;
       }
-      else if (matriz[siguientey][siguientex] == 4)
-      { // aqui me encuentro a un enemigo
-         // std::cout << "Entra a matar enemigo" << std::endl;
-         Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
-         matriz[siguientey][siguientex] = 2;
-         matriz[casillay][casillax] = 1;
+      std::vector<Enemigo *> enemigos = Escenario::getInstance()->getVectorEnemigos();
+
+      /*std::cout << " Fila CasillaVieja :  " << casillaViejaBlock.y << "  Columna casillaVieja: " << casillaViejaBlock.x << std::endl;
+   std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;*/
+      /*if (matriz[casillaViejaBlock.y][casillaViejaBlock.x] == 2) // si es un bloque azul
+   {*/
+
+      for (int i = 0; i < enemigos.size(); i++)
+      {
+
+         if (
+             (enemigos[i]->getColumna() == siguientex && enemigos[i]->getFila() == siguientey) ||
+             (enemigos[i]->getColumna() == casillax && enemigos[i]->getColumna() == casillay) ||
+             matriz[casillaViejaBlock.y][casillaViejaBlock.x] == 4 ||
+             matriz[siguientey][siguientex] == 4 || matriz[comprobaciones.y][comprobaciones.x] == 4 ||
+             matriz[comprobaciones2.y][comprobaciones2.x] == 4) // enemigo
+         {
+            std::cout << "Entra a matar enemigo" << std::endl;
+
+            Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+            matriz[siguientey][siguientex] = 2;
+            matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+         }
       }
 
       return true;
    }
+   /*else if (matriz[casillay][casillax] == 5)
+   {
+
+      if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
+      { // aqui lo muevo una vez y de ahi llamo a la funcion moveBlock que la llama el update
+         MovingBlock = true;
+         matriz[casillay][casillax] = 1;
+         matriz[siguientey][siguientex] = 5;
+         casillaViejaBlock.x = siguientex;
+         casillaViejaBlock.y = siguientey;
+      }
+      else if (matriz[siguientey][siguientex] == 4)
+      { // aqui me encuentro a un enemigo
+         // std::cout << "Entra a matar enemigo" << std::endl;
+         Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+         matriz[siguientey][siguientex] = 5;
+         matriz[casillay][casillax] = 1;
+      }
+
+      return true;
+   }*/
 
    else
    {
@@ -594,29 +675,88 @@ bool Jugador::getModoDios()
 }
 void Jugador::moveBlock()
 {
-
+   // std::cout << "Compruebo todo el puto rato" << contadorcito << std::endl;
    int **matriz = Escenario::getInstance()->getMatriz();
    int siguientex = casillaViejaBlock.x;
    int siguientey = casillaViejaBlock.y;
+   sf::Vector2i comprobaciones;
+   sf::Vector2i comprobaciones2;
+   sf::Vector2i comprobaciones3;
+   sf::Vector2i comprobaciones4;
+
+   bool BloqueEjeY;
+   bool BloqueEjeX;
+
    if (ultimaTecla == 1)
    {
+      BloqueEjeX = true;
       siguientex += 1;
    }
    else if (ultimaTecla == 2)
    {
+      BloqueEjeX = true;
+
       siguientex -= 1;
    }
    else if (ultimaTecla == 3)
    {
+      BloqueEjeY = true;
+
       siguientey += 1;
    }
    else if (ultimaTecla == 4)
    {
+      BloqueEjeY = true;
+
       siguientey -= 1;
    }
 
+   if (BloqueEjeX)
+   {
+      comprobaciones.x = siguientex;
+      comprobaciones.y = siguientey + 1;
+      comprobaciones2.x = siguientex;
+      comprobaciones2.y = siguientey - 1;
+      comprobaciones3.x = siguientex;
+      comprobaciones3.y = siguientey - 2;
+      comprobaciones4.x = siguientex;
+      comprobaciones4.y = siguientey + 2;
+   }
+   if (BloqueEjeY)
+   {
+      comprobaciones.x = siguientex - 1;
+      comprobaciones.y = siguientey;
+      comprobaciones2.x = siguientex + 1;
+      comprobaciones2.y = siguientey;
+      comprobaciones3.x = siguientex - 2;
+      comprobaciones3.y = siguientey;
+      comprobaciones4.x = siguientex + 2;
+      comprobaciones4.y = siguientey;
+   }
+   std::vector<Enemigo *> enemigos = Escenario::getInstance()->getVectorEnemigos();
+
    /*std::cout << " Fila CasillaVieja :  " << casillaViejaBlock.y << "  Columna casillaVieja: " << casillaViejaBlock.x << std::endl;
    std::cout << "Siguiente Fila : " << siguientey << "  Siguiente columna: " << siguientex << std::endl;*/
+   /*if (matriz[casillaViejaBlock.y][casillaViejaBlock.x] == 2) // si es un bloque azul
+   {*/
+
+   for (int i = 0; i < enemigos.size(); i++)
+   {
+
+      if (
+          (enemigos[i]->getColumna() == siguientex && enemigos[i]->getFila() == siguientey) ||
+          (enemigos[i]->getColumna() == casilla.x && enemigos[i]->getColumna() == casilla.y) ||
+          matriz[casillaViejaBlock.y][casillaViejaBlock.x] == 4 ||
+          matriz[siguientey][siguientex] == 4 || matriz[comprobaciones.y][comprobaciones.x] == 4 ||
+          matriz[comprobaciones2.y][comprobaciones2.x] == 4) // enemigo
+      {
+         std::cout << "Entra a matar enemigo" << std::endl;
+
+         Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+         matriz[siguientey][siguientex] = 2;
+         matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+      }
+   }
    if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
    {
       matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
@@ -624,17 +764,33 @@ void Jugador::moveBlock()
       casillaViejaBlock.x = siguientex;
       casillaViejaBlock.y = siguientey;
    }
-   else if (matriz[siguientey][siguientex] == 4)
-   {
-      //std::cout << "Entra a matar enemigo" << std::endl;
-      Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
-      matriz[siguientey][siguientex] = 2;
-      matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
-   }
-   else if(matriz[siguientey][siguientex]==2)
+   else
    {
       MovingBlock = false;
    }
+   //}
+   /*if (matriz[casillaViejaBlock.y][casillaViejaBlock.x] == 5) // si es una gema
+   {
+      if (matriz[siguientey][siguientex] == 1 || matriz[siguientey][siguientex] == 3)
+      {
+         matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+         matriz[siguientey][siguientex] = 5;
+         casillaViejaBlock.x = siguientex;
+         casillaViejaBlock.y = siguientey;
+      }
+      else if (matriz[siguientey][siguientex] == 4)
+      {
+         //std::cout << "Entra a matar enemigo" << std::endl;
+         Escenario::getInstance()->resetEnemigos(siguientey, siguientex);
+         matriz[siguientey][siguientex] = 5;
+         matriz[casillaViejaBlock.y][casillaViejaBlock.x] = 1;
+      }
+      else
+      {
+         MovingBlock = false;
+      }
+   }*/
+   contadorcito++;
 }
 
 void Jugador::rompiendoBloque()

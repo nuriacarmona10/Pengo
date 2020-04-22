@@ -25,7 +25,6 @@ private:
     //int **matrizVieja();
 
 public:
-    
     static Escenario *getInstance();
     //int **getMatrizVieja();
     void crearMatriz();
@@ -36,6 +35,7 @@ public:
     void checkColisions(float timeElapsed);
     int **getMatriz();
     void resetInstance();
+    std::vector<Enemigo *> getVectorEnemigos();
     void resetEnemigos(int f, int c);
     void setGameOver(bool b);
     void playerWin();

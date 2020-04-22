@@ -5,10 +5,10 @@
 
 #define kVel 4
 
-Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy,int id2)
+Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy)
 {
     body = bodys;
-    id=id2;
+
     body.setPosition(posx, posy);
     body.setTextureRect(sf::IntRect(2 * 32, 0, 32, 32));
     tiempoTotal = 0.0f;
@@ -19,6 +19,7 @@ Enemigo::Enemigo(sf::Sprite bodys, int posx, int posy,int id2)
     lastCasilla.x = posx / 32;
     lastCasilla.y = posy / 32;
     MovingBlock = false;
+    Muriendo = false;
 }
 Enemigo::~Enemigo()
 {
@@ -30,71 +31,87 @@ void Enemigo::Update(float deltaTime)
     velocity.y = 0;
     prevPos.x = body.getPosition().x;
     prevPos.y = body.getPosition().y;
-    
-   /* std::cout << "Columna: " << getColumna() << std::endl;
+
+    /* std::cout << "Columna: " << getColumna() << std::endl;
     std::cout << "Fila: " << getFila() << std::endl;*/
-
-    if (Enpaso)
+    if (!Muriendo)
     {
-        // std::cout << "ENTRA 1" << std::endl;
 
-        if (direccion == 1)
+        if (Enpaso)
         {
-            velocity.x = kVel;
-            avanzar(direccion, deltaTime);
-        }
-        else if (direccion == 2)
-        {
-            velocity.x = -kVel;
-            avanzar(direccion, deltaTime);
-        }
-        else if (direccion == 3)
-        {
-            velocity.y = +kVel;
-            avanzar(direccion, deltaTime);
-        }
-        else if (direccion == 4)
-        {
-            velocity.y = -kVel;
-            avanzar(direccion, deltaTime);
-        }
-    }
+            // std::cout << "ENTRA 1" << std::endl;
 
-    else // si ya ha terminado el paso hasta la proxima casilla
-    {
-        velocity.x = 0;
-        velocity.y = 0;
+            if (direccion == 1)
+            {
+                velocity.x = kVel;
+                avanzar(direccion, deltaTime);
+            }
+            else if (direccion == 2)
+            {
+                velocity.x = -kVel;
+                avanzar(direccion, deltaTime);
+            }
+            else if (direccion == 3)
+            {
+                velocity.y = +kVel;
+                avanzar(direccion, deltaTime);
+            }
+            else if (direccion == 4)
+            {
+                velocity.y = -kVel;
+                avanzar(direccion, deltaTime);
+            }
+        }
 
-        if (!checkColisions(direccion)) // si no hay colision
-
+        else // si ya ha terminado el paso hasta la proxima casilla
         {
-            animacion(3, deltaTime, true, 0, 3);
-            /*if (direccion == 1 || direccion == 2) // I dont like this
+            velocity.x = 0;
+            velocity.y = 0;
+
+            if (!checkColisions(direccion)) // si no hay colision
+
+            {
+                animacion(3, deltaTime, true, 0, 3);
+                /*if (direccion == 1 || direccion == 2) // I dont like this
                 posTecla.y = body.getPosition().y;
             else
                 posTecla.x = body.getPosition().x;*/
 
-            avanzar(direccion, deltaTime);
-        }
+                avanzar(direccion, deltaTime);
+            }
 
-        else
+            else
+            {
+
+                direccion = rand() % (4 - 1 + 1) + 1; // (max-min+1)+min  me da un numero del 1 al 4
+            }
+            if (direccion == 1 || direccion == 2 || direccion == 3 || direccion == 4)
+            {
+                checkColisionBlock();
+            }
+
+            imagenActual.x = posTecla.x;
+            imagenActual.y = posTecla.y;
+        }
+        if (BrokenBlock)
         {
-
-            direccion = rand() % (4 - 1 + 1) + 1; // (max-min+1)+min  me da un numero del 1 al 4
+            animacion(4, deltaTime, true, 0, 4);
         }
-        if (direccion == 1 || direccion == 2 || direccion == 3 || direccion == 4  )
+        BrokenBlock = false;
+        if (!BloqueRoto)
         {
-            checkColisionBlock();
+            int **matriz = Escenario::getInstance()->getMatriz();
+
+            int time = BloqueCLock.getElapsedTime().asMilliseconds();
+            //std::cout << "TIEMPO BLOQUE" << time << std::endl;
+            if (time > 0.5)
+            {
+                matriz[BloqueAromper.y][BloqueAromper.x] = 1;
+
+                BloqueRoto = true;
+            }
         }
-
-        imagenActual.x = posTecla.x;
-        imagenActual.y = posTecla.y;
     }
-    if(BrokenBlock) {
-        animacion(4,deltaTime,true,0,4);
-    }
-    BrokenBlock=false;
-
 }
 
 void Enemigo::Draw(sf::RenderWindow &window, float percentTick)
@@ -193,7 +210,7 @@ bool Enemigo::checkColisions(int dir)
         return true;
     }*/
 
-    if (abs(body.getPosition().x - player->getPosx() * 32) <= 20 && abs(body.getPosition().y - player->getPosy() * 32) <= 20 && !player->muriendo() && !player->getModoDios())
+    if (abs(body.getPosition().x - player->getPosx() * 32) <= 25 && abs(body.getPosition().y - player->getPosy() * 32) <= 25 && !player->muriendo() && !player->getModoDios())
     {
         if (!player->getEngolpe())
             player->setEngolpe(true);
@@ -288,11 +305,11 @@ int Enemigo::getColumna()
 {
     // std::cout << "Columna: " << abs(body.getPosition().x / 32 )<< std::endl;
 
-    return body.getPosition().x/32;
+    return body.getPosition().x / 32;
 }
 int Enemigo::getFila()
 {
-    return body.getPosition().y/32;
+    return body.getPosition().y / 32;
 }
 void Enemigo::updateMatriz(int fila, int columna)
 {
@@ -368,7 +385,11 @@ bool Enemigo::checkColisionBlock()
         {
 
             matriz[casillay][casillax] = 7; // aqui lo rompo
-            BrokenBlock=true;
+            BloqueAromper.x = casillax;
+            BloqueAromper.y = casillay;
+            BloqueCLock.restart();
+            BloqueRoto = false;
+            BrokenBlock = true;
         }
 
         return true;
@@ -379,6 +400,11 @@ bool Enemigo::checkColisionBlock()
         return false;
     }
 }
-int Enemigo::getId(){
+int Enemigo::getId()
+{
     return id;
+}
+void Enemigo::setMuriendo()
+{
+    Muriendo = true;
 }

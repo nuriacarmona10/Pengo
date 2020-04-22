@@ -32,6 +32,7 @@ public:
     void rompiendoBloque();
 
 private:
+    int contadorcito;
     sf::IntRect rect;
     sf::Clock animationClock;
     sf::Clock dieClock;
@@ -40,12 +41,15 @@ private:
     sf::Clock BloqueCLock;
     sf::Vector2i BloqueAromper;
     sf::Vector2i casillaViejaBlock;
+    sf::Vector2i casilla;
+
     bool Enpaso;
     bool Muriendo;
     bool MovingBlock;
     bool modoDios;
     bool BrokenBlock;
     bool BloqueRoto;
+    bool MatandoEnemigo;
 
     sf::Vector2f lastCasilla;
     sf::Vector2f posTecla;

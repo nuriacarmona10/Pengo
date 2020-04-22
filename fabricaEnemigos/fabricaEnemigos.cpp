@@ -25,9 +25,9 @@ fabricaEnemigos *fabricaEnemigos::getInstance()
     }
     return instance;
 }
-Enemigo* fabricaEnemigos::crearEnemigo(int posx,int posy,int id)
+Enemigo* fabricaEnemigos::crearEnemigo(int posx,int posy)
 {
     
-    return new Enemigo(body,posx,posy, id);
+    return new Enemigo(body,posx,posy);
 }
 
